@@ -1,2 +1,3 @@
-# atxforge-opportunity-desk
-ATXFORGE Opportunity Desk — hire-replacement and flexible microagency opportunity feed
+# ATXFORGE Opportunity Desk
+
+Hire-replacement and flexible microagency opportunity feed for ATXFORGE.
