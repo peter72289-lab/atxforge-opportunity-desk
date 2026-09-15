@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#141416"/>
+  <rect x="40" y="40" width="1120" height="595" rx="16" stroke="rgba(255,255,255,0.08)" stroke-width="2" fill="#1c1c1f"/>
+  <rect x="80" y="100" width="200" height="28" rx="14" fill="rgba(255,92,26,0.2)" stroke="#ff5c1a" stroke-width="1"/>
+  <text x="100" y="119" fill="#ff7a45" font-family="system-ui,sans-serif" font-size="13" font-weight="600">SCREENSHOT SLOT</text>
+  <text x="80" y="190" fill="#f5f2eb" font-family="system-ui,sans-serif" font-size="32" font-weight="700">Listing capture placeholder</text>
+  <text x="80" y="240" fill="#a1a1aa" font-family="system-ui,sans-serif" font-size="18">Drop a PNG/JPG at /public/screenshots/ and set screenshotPath</text>
+  <text x="80" y="280" fill="#71717a" font-family="system-ui,sans-serif" font-size="16">ATXFORGE Opportunity Desk · research sample</text>
+  <rect x="80" y="360" width="1040" height="8" rx="4" fill="#27272a"/>
+  <rect x="80" y="390" width="820" height="8" rx="4" fill="#27272a"/>
+  <rect x="80" y="420" width="940" height="8" rx="4" fill="#27272a"/>
+  <rect x="80" y="450" width="700" height="8" rx="4" fill="#27272a"/>
+  <circle cx="1060" cy="520" r="48" fill="rgba(255,92,26,0.15)" stroke="#ff5c1a" stroke-width="2"/>
+  <text x="1042" y="528" fill="#ff5c1a" font-family="system-ui,sans-serif" font-size="20" font-weight="800">AF</text>
+</svg>
