@@ -7,11 +7,11 @@ Stack: Next.js 14 (App Router) · TypeScript · Tailwind · Framer Motion. Dark 
 ## Run locally
 
 ```bash
-cd /workspace/atxforge-opportunity-desk
-npm install
-npm run dev          # http://localhost:3001
-npm run build        # production build
-npm start            # serve production on :3001
+bun install
+bun run dev          # http://localhost:3001
+bun run build        # production build
+bun run start        # serve production on :3001
+bun run lint
 ```
 
 Port **3001** is intentional so `:3000` can host the marketing site.
@@ -89,4 +89,4 @@ No backend/auth in v1. Future ingest routines can append to the same schema:
 
 ## Brand
 
-Ink / charcoal + ember orange (`#ff5c1a`), Syne + DM Sans + Geist Mono — same family as `/workspace/atxforge`.
+Ink / charcoal + ember orange (`#ff5c1a`), Syne + DM Sans + Geist Mono — same family as the ATXFORGE marketing site.
