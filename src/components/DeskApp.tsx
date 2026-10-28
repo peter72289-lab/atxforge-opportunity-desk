@@ -27,7 +27,7 @@ import { TrackTabs } from "./TrackTabs";
 import { ValueStrip } from "./ValueStrip";
 
 // Interim: status lives in this browser's localStorage until the shared
-// store lands (RED_TEAM H6). Bump the version if the shape changes.
+// store lands. Bump the version if the shape changes.
 const STATUS_KEY = "atxforge-desk:status:v1";
 const DOSSIER_PARAM = "d";
 

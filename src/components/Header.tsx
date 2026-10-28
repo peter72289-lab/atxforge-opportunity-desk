@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-// ROADMAP Stage 1 step 8: amber after 7 days, red after 14.
+// Data age: amber after 7 days, red after 14.
 const AMBER_AFTER_DAYS = 7;
 const RED_AFTER_DAYS = 14;
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -72,13 +72,6 @@ export function Header({ lastRefreshed, count }: HeaderProps) {
           <span className="rounded-full border border-ember/30 bg-ember/10 px-3 py-1.5 font-mono text-[11px] text-ember-soft">
             {count} dossiers
           </span>
-          <a
-            href="http://localhost:3000"
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-ink-800 px-3 py-1.5 text-xs font-medium text-ink-100 transition hover:border-ember/40 hover:text-chalk"
-            title="Marketing site (dev :3000)"
-          >
-            ← Marketing site
-          </a>
         </div>
       </div>
     </header>
