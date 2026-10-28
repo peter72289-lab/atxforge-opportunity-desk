@@ -328,6 +328,125 @@ describe("adversarial strings (H8, M5)", () => {
   });
 });
 
+describe("red-team rerun after PR #2", () => {
+  test("senior Associate titles are not junior; plain Associate still is", () => {
+    for (const title of [
+      "Associate Creative Director",
+      "Associate General Counsel",
+      "Associate Vice-President, Marketing",
+      "Associate Vice President of Growth",
+      "Senior Associate",
+    ]) {
+      expect(has({ ...base, title }, JUNIOR)).toBe(false);
+    }
+    for (const title of ["Marketing Associate", "Associate"]) {
+      expect(has({ ...base, title }, JUNIOR)).toBe(true);
+    }
+  });
+
+  test("vibe-coded prototype headed to production is a build job, not a penalty", () => {
+    const input = {
+      ...base,
+      contextExcerpt:
+        "Turn our vibe-coded prototype into a production system.",
+    };
+    expect(has(input, VIBE)).toBe(false);
+    expect(has(input, BUILD)).toBe(true);
+    // Without production intent, or when explicitly prototype-only, it still counts.
+    for (const excerpt of [
+      "Vibe-code a quick demo for the board.",
+      "Vibe-coded MVP, prototype only.",
+      "Vibe coding a toy project, no deploy.",
+    ]) {
+      expect(has({ ...base, contextExcerpt: excerpt }, VIBE)).toBe(true);
+    }
+  });
+
+  test("more rigid phrasings", () => {
+    for (const excerpt of [
+      "Classic 9-to-5.",
+      "Hours are 9:00-5:00.",
+      "Hours 9:00 am - 5:00 pm.",
+      "Shift is 8-5.",
+      "Hours 8am-6pm.",
+      "You must be in the office.",
+      "Must work on site.",
+      "Fully in-office role.",
+      "Five days a week in the office.",
+      "PST only.",
+      "EST only.",
+      "CST only.",
+      "MST only.",
+    ]) {
+      expect(has({ ...base, contextExcerpt: excerpt }, RIGID)).toBe(true);
+    }
+    // Existing exceptions still hold.
+    for (const excerpt of [
+      "Lead a 49-55 person team.",
+      "We raised $9-5M last year.",
+      "Hybrid, on-site 1-3 days a week.",
+      "On-site visits optional.",
+      "Own on site SEO.",
+      "Interest only loans.",
+    ]) {
+      expect(has({ ...base, contextExcerpt: excerpt }, RIGID)).toBe(false);
+    }
+  });
+
+  test("contractions negate; negation doesn't cross clauses", () => {
+    for (const excerpt of [
+      "This isn't a 9-5.",
+      "We aren't on-site.",
+      "You won't be on-site.",
+      "You don't need to be in-office daily.",
+      "The role doesn't require on-site work.",
+    ]) {
+      expect(has({ ...base, contextExcerpt: excerpt }, RIGID)).toBe(false);
+    }
+    expect(
+      has(
+        { ...base, contextExcerpt: "No relocation required. Onsite daily." },
+        RIGID
+      )
+    ).toBe(true);
+    expect(
+      has(
+        { ...base, contextExcerpt: "No relocation required, onsite daily." },
+        RIGID
+      )
+    ).toBe(true);
+  });
+
+  test("a negated rigid excuse doesn't rescue a rigid post", () => {
+    const row = {
+      seniority: "VP" as const,
+      flexibility: "Rigid" as const,
+      salarySignal: "$100k+" as const,
+      skills: [],
+      title: "VP Marketing",
+    };
+    expect(
+      suggestTracks({
+        ...row,
+        contextExcerpt:
+          "A flexible schedule is not offered. Must be in-office daily.",
+      })
+    ).toEqual(["poor-fit"]);
+    expect(
+      suggestTracks({
+        ...row,
+        contextExcerpt: "No flexible schedule. Must be in-office daily.",
+      })
+    ).toEqual(["poor-fit"]);
+    expect(
+      suggestTracks({
+        ...row,
+        contextExcerpt: "Flexible schedule. In-office for launches.",
+      })
+    ).not.toContain("poor-fit");
+  });
+});
+
 describe("exact values that document a rule", () => {
   test("base row with no matches is the sum of its table weights", () => {
     const input: ScoreInput = { ...base, skills: [], contextExcerpt: "" };

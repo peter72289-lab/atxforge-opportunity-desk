@@ -8,7 +8,7 @@ import type {
 } from "@/data/types";
 
 /** Bump when any weight or pattern changes, so stored scores can be compared. */
-export const SCORE_VERSION = "2";
+export const SCORE_VERSION = "3";
 
 export const BASE_SCORE = 28;
 
@@ -72,50 +72,89 @@ const BUILD_RE =
 const FLEX_LANGUAGE_RE =
   /\b(?:async|flexible|set your own hours|get the job done|outcomes|retainer|fractional)\b/g;
 
+// Working-hours ranges: 9-5, 9-to-5, 9am-5pm, 9:00 am - 5:00 pm, 8-5, 8am-6pm.
+// "49-55" and "$9-5M" don't count.
+const HOURS = String.raw`(?<![\w$.:])(?:[789]|10)(?::[0-5]\d)?\s*(?:a\.?m\.?)?\s*(?:-to-|-|–|—|to)\s*[3-7](?::[0-5]\d)?\s*(?:p\.?m\.?)?(?![\d%kmb:])`;
+const OFFICE = String.raw`(?:in[- ]office|in the office|on-?site)`;
+
 const RIGID_RE = new RegExp(
   [
-    // 9-5, 9am-5pm, 9 to 5; "49-55" and "$9-5M" don't count
-    String.raw`(?<![\d$.])9\s*(?:a\.?m\.?)?\s*(?:-|–|—|to)\s*5\s*(?:p\.?m\.?)?(?![\d%kmb])`,
-    String.raw`\bmust be in[- ]office\b`,
+    HOURS,
+    String.raw`\bmust (?:be|work) (?:in[- ]office|in the office|on[- ]?site)\b`,
+    String.raw`\bfully (?:in[- ]office|in[- ]person|on-?site)\b`,
     // "on-site"/"onsite", not "on site SEO", "on-site visits" or hybrid "on-site 2 days a week"
     String.raw`\bon-?site\b(?! visits?\b| as needed\b| optional\b|[^.,;]{0,20}?\b[1-3] days?\b)`,
     String.raw`\bin[- ]office (?:daily|every day)\b`,
-    // "office 5 days/week", "in-office 5 days"
-    String.raw`\b(?:office|on-?site|in[- ]person)\b[^.,;]{0,30}?\b[45] days\b`,
-    String.raw`\b[45] days\b[^.,;]{0,20}?\b(?:in[- ]office|in the office|on-?site)\b`,
+    // "office 5 days/week", "in-office 5 days", "five days a week in the office"
+    String.raw`\b(?:office|on-?site|in[- ]person)\b[^.,;]{0,30}?\b(?:[45]|four|five) days\b`,
+    String.raw`\b(?:[45]|four|five) days\b[^.,;]{0,20}?\b${OFFICE}\b`,
     // "in office Monday-Friday"
-    String.raw`\b(?:in[- ]office|in the office|on-?site)\b[^.]{0,20}?\bmon(?:day)?\s*(?:-|–|to|through)\s*fri(?:day)?\b`,
-    String.raw`\best only\b`,
-    String.raw`\b(?:eastern|pacific|central) time (?:only|required)\b`,
+    String.raw`\b${OFFICE}\b[^.]{0,20}?\bmon(?:day)?\s*(?:-|–|to|through)\s*fri(?:day)?\b`,
+    // EST/PST/CST/MST (and EDT/PDT...) only; not "interest only"
+    String.raw`\b[ecmp][sd]?t only\b`,
+    String.raw`\b(?:eastern|pacific|central|mountain) time (?:only|required)\b`,
     String.raw`\btime ?zone (?:is )?mandatory\b`,
   ].join("|"),
   "g"
 );
 
 // Read against the title only, so "internal", "mentor a junior engineer" etc. in the excerpt don't trip it.
+// "Associate" is junior on its own ("Marketing Associate"), not in senior titles
+// (Senior Associate, Associate [Creative] Director, Associate VP / Vice President, Partner, General Counsel).
 const JUNIOR_TITLE_RE =
-  /\b(?:junior|jr\b\.?|intern(?:ship)?|entry[- ]level|entry to mid|early[- ]career|coordinator|associate(?! (?:director|vp|vice president|partner)\b))(?=\W|$)/g;
+  /\b(?:junior|jr\b\.?|intern(?:ship)?|entry[- ]level|entry to mid|early[- ]career|coordinator|(?<!\bsenior[- ])associate(?![- ](?:(?:[\w-]+ )?director|vp|vice[- ]president|partner|general counsel|principal)\b))(?=\W|$)/g;
 
-// These patterns carry their own "no", so they are not negation-checked.
-const VIBE_RE =
-  /\b(?:vibe[- ]?cod\w*|prototype only|toy project|no deploy(?:ment)?(?: path)?)\b/g;
+// Explicit prototype-only language carries its own "no", so it is not negation-checked and always counts.
+const PROTOTYPE_ONLY_RE =
+  /\b(?:prototype only|no deploy(?:ment)?(?: path)?)\b/g;
+
+// Vibe/toy language only counts when the post shows no production intent:
+// "turn our vibe-coded prototype into a production system" is a build job.
+const VIBE_RE = /\b(?:vibe[- ]?cod\w*|toy project)\b/g;
+
+const PRODUCTION_INTENT_RE =
+  /\b(?:production|deploy(?:s|ed|ing|ment)?|ship(?:s|ping)?|launch(?:es|ing)?|go live)\b/g;
 
 const SOLE_HIRE_RE =
   /\b(?:sole\b[^.]{0,30}?\bfte|only hire|single person in office|full[- ]time employees? only|no agencies)\b/g;
 
-const NEGATOR_RE = /^(?:no|not|without|never|non)$/;
+// Only an explicit remote-first or flexible schedule rescues a rigid post; bare "async" doesn't.
+const RIGID_EXCUSE_RE = /\b(?:remote[- ]first|flexible schedule)\b/g;
 
-/** True if one of the 3 words before `index` in the same clause is a negator ("no deploy path"). */
-export function isNegated(text: string, index: number): boolean {
-  const before = text.slice(Math.max(0, index - 60), index);
-  const clause = before.split(/[.,;:!?()—–]/).pop() ?? "";
-  const words = clause
+// Apostrophes are stripped before matching, so "isn't" is "isnt".
+const NEGATOR_RE =
+  /^(?:no|not|without|never|non|isnt|arent|wasnt|werent|wont|dont|doesnt|didnt|cant|cannot)$/;
+
+// Skipped when counting the window, so "don't need to be on-site" still reaches "don't".
+const FILLER = new Set(["a", "an", "the", "to", "be", "is", "are", "in", "on", "at", "any"]);
+
+const CLAUSE_BREAK = /[.,;:!?()—–]/;
+
+/** Non-filler words of `clause`, stripped of punctuation. */
+function contentWords(clause: string): string[] {
+  return clause
     .split(/[\s/]+/)
     .map((w) => w.replace(/[^a-z-]/g, ""))
-    .filter(Boolean)
-    .slice(-3);
-  // "non-" only as a bare prefix ("non-production"), so "non-negotiable" doesn't negate.
-  return words.some((w) => NEGATOR_RE.test(w) || w === "non-");
+    .filter((w) => w && !FILLER.has(w));
+}
+
+// "non-" only as a bare prefix ("non-production"), so "non-negotiable" doesn't negate.
+const isNegator = (w: string) => NEGATOR_RE.test(w) || w === "non-";
+
+/**
+ * True if one of the 2 words before `index` in the same clause, filler words skipped,
+ * is a negator ("no deploy path", "isn't a 9-5"). "No relocation required. Onsite daily." is not negated.
+ */
+export function isNegated(text: string, index: number): boolean {
+  const before = text.slice(Math.max(0, index - 60), index);
+  const clause = before.split(CLAUSE_BREAK).pop() ?? "";
+  return contentWords(clause).slice(-2).some(isNegator);
+}
+
+/** True if one of the 2 words after `end` in the same clause is a negator ("flexible schedule is not offered"). */
+function isNegatedAfter(text: string, end: number): boolean {
+  const clause = text.slice(end, end + 40).split(CLAUSE_BREAK)[0] ?? "";
+  return contentWords(clause).slice(0, 2).some(isNegator);
 }
 
 /** First match of `re` in `text` that isn't negated, or null. */
@@ -129,6 +168,23 @@ function firstMatch(
     if (!checkNegation || !isNegated(text, m.index ?? 0)) return m[0];
   }
   return null;
+}
+
+/** Prototype-only match: explicit always; vibe/toy language only without production intent. */
+function vibeMatch(blob: string): string | null {
+  const explicit = firstMatch(blob, PROTOTYPE_ONLY_RE, false);
+  if (explicit) return explicit;
+  if (firstMatch(blob, PRODUCTION_INTENT_RE) !== null) return null;
+  return firstMatch(blob, VIBE_RE);
+}
+
+/** A remote-first / flexible-schedule phrase that is negated on neither side. */
+function rigidExcused(blob: string): boolean {
+  RIGID_EXCUSE_RE.lastIndex = 0;
+  return Array.from(blob.matchAll(RIGID_EXCUSE_RE)).some((m) => {
+    const i = m.index ?? 0;
+    return !isNegated(blob, i) && !isNegatedAfter(blob, i + m[0].length);
+  });
 }
 
 export interface ScoreContribution {
@@ -197,7 +253,7 @@ export function explainForgeScore(input: ScoreInput): ScoreExplanation {
   const junior = firstMatch(title, JUNIOR_TITLE_RE, false);
   if (junior) add("Junior title", -PENALTIES.junior, junior);
 
-  const vibe = firstMatch(blob, VIBE_RE, false);
+  const vibe = vibeMatch(blob);
   if (vibe) add("Prototype or toy only", -PENALTIES.vibe, vibe);
 
   const sole = firstMatch(blob, SOLE_HIRE_RE);
@@ -238,15 +294,8 @@ export function suggestTracks(input: {
 
   const rigid =
     input.flexibility === "Rigid" || firstMatch(blob, RIGID_RE) !== null;
-  // Only an explicit remote-first or flexible schedule rescues a rigid post; bare "async" doesn't.
-  const rigidExcused =
-    firstMatch(blob, /\b(?:remote[- ]first|flexible schedule)\b/g) !== null;
 
-  if (
-    (rigid && !rigidExcused) ||
-    junior ||
-    firstMatch(blob, VIBE_RE, false) !== null
-  ) {
+  if ((rigid && !rigidExcused(blob)) || junior || vibeMatch(blob) !== null) {
     // Poor-fit suppresses the other tracks.
     return ["poor-fit"];
   }
