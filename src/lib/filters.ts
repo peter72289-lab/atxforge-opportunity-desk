@@ -110,7 +110,13 @@ export function filterOpportunities(
 
       return true;
     })
-    .sort((a, b) => b.score - a.score);
+    .sort(
+      (a, b) =>
+        // Score desc, then newest seenAt, then id, so ties don't depend on file order.
+        b.score - a.score ||
+        b.seenAt.localeCompare(a.seenAt) ||
+        a.id.localeCompare(b.id)
+    );
 }
 
 export function uniqueIndustries(items: Opportunity[]): string[] {
