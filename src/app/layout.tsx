@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   title: "ATXFORGE Opportunity Desk",
   description:
     "Curated senior opportunities where ATXFORGE can replace one FTE or land flexible partnership/build work — across any industry.",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
