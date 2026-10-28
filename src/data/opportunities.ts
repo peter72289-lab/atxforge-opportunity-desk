@@ -2,64 +2,16 @@ import type { Opportunity } from "./types";
 import { computeForgeScore } from "@/lib/scoring";
 
 /**
- * Seed dossiers — research samples for the Opportunity Desk v1.
- * Marked `sample: true`. These are illustrative of desk shape, not live scrapes.
- * Real public URLs included where researched; treat listings as possibly stale.
+ * Invented sample rows for layout and scoring tests. These are not real
+ * listings: every org is made up, and every row is marked `sample: true`.
+ *
+ * Each sourceUrl is a source site's homepage or index page, kept so the UI has
+ * something to link. None of them points at an actual listing for these rows.
+ *
+ * Never add real leads, company names or notes to this file. Everything here
+ * ships in the public JS bundle.
  */
 const raw: Omit<Opportunity, "score">[] = [
-  {
-    id: "opp-everist-vp-mkt",
-    title: "Fractional VP of Marketing",
-    org: "Everist",
-    tracks: ["hire-replacement", "flexible", "build-creative"],
-    seniority: "VP",
-    salarySignal: "Fractional rate",
-    flexibility: "Flexible",
-    industry: "CPG / Beauty",
-    skills: ["Peter", "Creative & Deploy", "Wilson"],
-    sourceName: "Fractional Jobs",
-    sourceType: "Job board",
-    sourceUrl: "https://www.fractionaljobs.io/jobs/vp-of-marketing-at-everist",
-    community: "Fractional Jobs board",
-    contextExcerpt:
-      "Fractional VP of Marketing… ~10 hours/week to start, with the opportunity to move into a full-time position. Enable the founder to step out of day-to-day marketing management. Brand building + performance, TikTok/influencer, creative strategy and content development.",
-    whyForge:
-      "Classic hire-replacement: one VP seat covering strategy, creative, and performance. ATXFORGE staffs Peter (offer/messaging/CMO shape) + Creative & Deploy for asset pipelines + Wilson for systems/ads wiring — continuity if any one partner is heads-down elsewhere.",
-    recommendedPartners: ["Peter", "Creative & Deploy", "Wilson"],
-    fitNotes:
-      "Fractional → full-time path; beauty/CPG domain depth needed. Strong forge fit if they value bench over a sole operator.",
-    screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "New",
-    seenAt: "2026-09-10",
-    sample: true,
-  },
-  {
-    id: "opp-sunday-cmo",
-    title: "Fractional Chief Marketing Officer",
-    org: "SunDay Drinks",
-    tracks: ["hire-replacement", "flexible", "build-creative"],
-    seniority: "C-level",
-    salarySignal: "Fractional rate",
-    flexibility: "Flexible",
-    industry: "CPG / Beverage",
-    skills: ["Peter", "Wilson", "Creative & Deploy"],
-    sourceName: "Fractional Jobs",
-    sourceType: "Job board",
-    sourceUrl:
-      "https://www.fractionaljobs.io/jobs/chief-marketing-officer-at-sunday-drinks",
-    community: "Fractional Jobs board",
-    contextExcerpt:
-      "Seeking a Fractional CMO or VP of Marketing to own strategy, execution, and performance accountability. Hands on keyboard. Build lightweight systems that scale without unnecessary headcount. Part-time 10–20 hrs/week; equity or co-founder role available.",
-    whyForge:
-      "They explicitly want senior ownership without headcount bloat — microagency vs single FTE. Peter owns CMO-shaped leadership; Wilson builds measurement systems; Creative & Deploy ships creative at volume.",
-    recommendedPartners: ["Peter", "Wilson", "Creative & Deploy"],
-    fitNotes:
-      "Equity/co-founder language = partnership upside. Confirm capital-invest expectation before outreach.",
-    screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "New",
-    seenAt: "2026-09-08",
-    sample: true,
-  },
   {
     id: "opp-fintech-head-growth",
     title: "Head of Growth (first marketing hire)",
@@ -82,7 +34,7 @@ const raw: Omit<Opportunity, "score">[] = [
     fitNotes:
       "Unknown flexibility — probe async/remote before committing. Strong hire-replacement signal.",
     screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "Reviewing",
+    status: "New",
     seenAt: "2026-09-12",
     sample: true,
   },
@@ -186,7 +138,7 @@ const raw: Omit<Opportunity, "score">[] = [
     fitNotes:
       "Equity-heavy — structure as partnership with clear IP/equity terms. High forge score if stipend covers burn.",
     screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "Outreach",
+    status: "New",
     seenAt: "2026-09-07",
     sample: true,
   },
@@ -264,7 +216,7 @@ const raw: Omit<Opportunity, "score">[] = [
     fitNotes:
       "Confirm remote vs hybrid. Strong salary signal.",
     screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "Reviewing",
+    status: "New",
     seenAt: "2026-09-05",
     sample: true,
   },
@@ -297,7 +249,7 @@ const raw: Omit<Opportunity, "score">[] = [
   {
     id: "opp-retail-cmo-engine",
     title: "Fractional CMO — Retail Growth Engine",
-    org: "Showtime Ventures–style portfolio (sample)",
+    org: "Brightshelf Portfolio (sample)",
     tracks: ["hire-replacement", "flexible", "build-creative"],
     seniority: "C-level",
     salarySignal: "Fractional rate",
@@ -395,7 +347,7 @@ const raw: Omit<Opportunity, "score">[] = [
     fitNotes:
       "Mentions 9–5 ET + must-be-in-office daily — poor flexibility. Junior IC scope. DOWNRANK.",
     screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "Skipped",
+    status: "New",
     seenAt: "2026-09-11",
     sample: true,
   },
@@ -421,7 +373,7 @@ const raw: Omit<Opportunity, "score">[] = [
     fitNotes:
       "Rigid onsite + junior scope. Skip unless they reframe as senior fractional leadership.",
     screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "Skipped",
+    status: "New",
     seenAt: "2026-09-10",
     sample: true,
   },
@@ -447,34 +399,8 @@ const raw: Omit<Opportunity, "score">[] = [
     fitNotes:
       "No production/deploy path. DOWNRANK unless expanded into real build+launch engagement.",
     screenshotPath: "/screenshots/placeholder-dossier.svg",
-    status: "Skipped",
-    seenAt: "2026-09-14",
-    sample: true,
-  },
-  {
-    id: "opp-agency-b2b-dir",
-    title: "Fractional Director of Marketing",
-    org: "1r Agency (syndicated sample)",
-    tracks: ["hire-replacement", "flexible"],
-    seniority: "Director",
-    salarySignal: "Fractional rate",
-    flexibility: "Flexible",
-    industry: "Agency / Ecommerce services",
-    skills: ["Peter", "Wilson"],
-    sourceName: "Public job syndication",
-    sourceType: "Other",
-    sourceUrl: "https://www.fractionaljobs.io/",
-    community: "Remote fractional listings",
-    contextExcerpt:
-      "Flexible, remote-first environment. Fractional Director of Marketing to lead B2B marketing strategy — content, campaigns, partnerships, website, brand, and marketing operations. Meaningful ownership with agency leadership.",
-    whyForge:
-      "Director-level fractional seat spanning strategy + ops — Peter leads narrative/demand; Wilson installs reporting/ops systems. Hire-replacement for a senior marketing leader without a sole-FTE dependency.",
-    recommendedPartners: ["Peter", "Wilson"],
-    fitNotes:
-      "Agency-on-agency dynamics — confirm non-compete / client conflict. Still a useful research sample for flexible director seats.",
-    screenshotPath: "/screenshots/placeholder-dossier.svg",
     status: "New",
-    seenAt: "2026-09-10",
+    seenAt: "2026-09-14",
     sample: true,
   },
 ];
@@ -496,6 +422,7 @@ function scored(o: Omit<Opportunity, "score">): Opportunity {
 
 export const opportunities: Opportunity[] = raw.map(scored);
 
+// Date the sample rows were written, not a data refresh. Nothing here is live.
 export const LAST_REFRESHED = "2026-09-14";
 
 export const opportunityCount = opportunities.length;
