@@ -256,7 +256,7 @@ export function DossierDrawer({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-ember px-4 py-2 text-sm font-semibold text-ink shadow-ember transition hover:bg-ember-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-chalk focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
                 >
-                  Open listing / thread ↗
+                  Open source link ↗
                 </a>
               </section>
 
