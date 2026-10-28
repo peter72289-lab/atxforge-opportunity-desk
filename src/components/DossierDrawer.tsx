@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Opportunity, OpportunityStatus } from "@/data/types";
 import {
   FLEX_STYLES,
@@ -11,6 +11,11 @@ import {
   TRACK_LABELS,
   scoreTone,
 } from "@/lib/labels";
+
+const PLACEHOLDER_SCREENSHOT = "/screenshots/placeholder-dossier.svg";
+
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 interface DossierDrawerProps {
   opportunity: Opportunity | null;
@@ -24,27 +29,69 @@ export function DossierDrawer({
   onStatusChange,
 }: DossierDrawerProps) {
   const reduce = useReducedMotion();
+  const panelRef = useRef<HTMLElement>(null);
+  // Parent passes a new onClose each render; keep the latest without
+  // re-running the open/close effect (which would steal focus back).
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+  const isOpen = o !== null;
 
   useEffect(() => {
-    if (!o) return;
+    if (!isOpen) return;
+    const opener =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    panelRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      if (e.key !== "Tab" || !panelRef.current) return;
+      // Keep Tab / Shift+Tab inside the drawer while it is open.
+      const nodes = Array.from(
+        panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
+      );
+      if (nodes.length === 0) {
+        e.preventDefault();
+        return;
+      }
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      const current = document.activeElement;
+      const inside = panelRef.current.contains(current);
+      // The panel itself holds focus right after opening; Shift+Tab from it
+      // would otherwise leave the dialog.
+      const atStart = current === first || current === panelRef.current;
+      if (e.shiftKey && (atStart || !inside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (current === last || !inside)) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+      if (opener && opener.isConnected) opener.focus();
     };
-  }, [o, onClose]);
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
       {o && (
         <>
-          <motion.button
-            type="button"
-            aria-label="Close dossier"
+          {/* Backdrop: mouse/touch dismiss only; keyboard uses Esc or the close button. */}
+          <motion.div
+            aria-hidden="true"
             className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,10 +99,12 @@ export function DossierDrawer({
             onClick={onClose}
           />
           <motion.aside
+            ref={panelRef}
+            tabIndex={-1}
             role="dialog"
             aria-modal="true"
             aria-labelledby="dossier-title"
-            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-xl flex-col border-l border-white/10 bg-ink-900 shadow-drawer"
+            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-xl flex-col border-l border-white/10 bg-ink-900 shadow-drawer outline-none"
             initial={reduce ? false : { x: "100%" }}
             animate={{ x: 0 }}
             exit={reduce ? undefined : { x: "100%" }}
@@ -79,7 +128,8 @@ export function DossierDrawer({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-lg border border-white/10 px-2.5 py-1.5 text-sm text-ink-200 hover:text-chalk"
+                aria-label="Close dossier"
+                className="rounded-lg border border-white/10 px-2.5 py-1.5 text-sm text-ink-200 hover:text-chalk focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember"
               >
                 Esc
               </button>
@@ -130,11 +180,12 @@ export function DossierDrawer({
 
               <section>
                 <h3 className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-300">
-                  Context excerpt
+                  Source excerpt
                 </h3>
-                <blockquote className="mt-2 rounded-lg border border-ember/20 bg-ember/5 px-4 py-3 text-sm leading-relaxed text-ink-100">
-                  “{o.contextExcerpt}”
-                </blockquote>
+                {/* Not wrapped in quote marks: excerpts are often paraphrased. */}
+                <p className="mt-2 rounded-lg border border-ember/20 bg-ember/5 px-4 py-3 text-sm leading-relaxed text-ink-100">
+                  {o.contextExcerpt}
+                </p>
               </section>
 
               <section>
@@ -168,20 +219,24 @@ export function DossierDrawer({
                 )}
               </section>
 
-              <section>
-                <h3 className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-300">
-                  Screenshot
-                </h3>
-                <div className="relative mt-2 aspect-video overflow-hidden rounded-lg border border-white/10 bg-ink-800">
-                  <Image
-                    src={o.screenshotPath || "/screenshots/placeholder-dossier.svg"}
-                    alt={`Screenshot slot for ${o.title}`}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
-              </section>
+              {/* Hidden until a real capture exists; the placeholder implied one. */}
+              {o.screenshotPath &&
+                o.screenshotPath !== PLACEHOLDER_SCREENSHOT && (
+                  <section>
+                    <h3 className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-300">
+                      Screenshot
+                    </h3>
+                    <div className="relative mt-2 aspect-video overflow-hidden rounded-lg border border-white/10 bg-ink-800">
+                      <Image
+                        src={o.screenshotPath}
+                        alt={`Screenshot of the listing for ${o.title}`}
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
+                  </section>
+                )}
 
               <section className="space-y-2">
                 <h3 className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-300">
@@ -199,7 +254,7 @@ export function DossierDrawer({
                   href={o.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-ember px-4 py-2 text-sm font-semibold text-ink shadow-ember transition hover:bg-ember-soft"
+                  className="inline-flex items-center gap-2 rounded-full bg-ember px-4 py-2 text-sm font-semibold text-ink shadow-ember transition hover:bg-ember-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-chalk focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
                 >
                   Open listing / thread ↗
                 </a>
@@ -218,13 +273,18 @@ export function DossierDrawer({
                 <h3 className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-300">
                   Status workflow
                 </h3>
-                <div className="mt-2 flex flex-wrap gap-1.5">
+                <div
+                  role="group"
+                  aria-label="Status"
+                  className="mt-2 flex flex-wrap gap-1.5"
+                >
                   {STATUS_OPTIONS.map((s) => (
                     <button
                       key={s}
                       type="button"
+                      aria-pressed={o.status === s}
                       onClick={() => onStatusChange(o.id, s)}
-                      className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                      className={`rounded-full border px-3 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember ${
                         o.status === s
                           ? "border-ember/50 bg-ember/20 text-ember-soft"
                           : "border-white/10 text-ink-300 hover:text-chalk"
