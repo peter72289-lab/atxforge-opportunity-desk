@@ -2,7 +2,7 @@
 
 Production-quality **opportunity desk** for the ATXFORGE micro-agency / collective. Curates senior seats where ATXFORGE can **replace one full-time hire** (VP / Director / Co-founder / $100k+ scope) or land **flexible partnership / build** work — across **any industry**.
 
-Stack: Next.js 14 (App Router) · TypeScript · Tailwind · Framer Motion. Dark ember aesthetic aligned with the ATXFORGE marketing site.
+Stack: Next.js 15 (App Router) · TypeScript · Tailwind · Framer Motion. Dark ember aesthetic aligned with the ATXFORGE marketing site.
 
 ## Run locally
 
