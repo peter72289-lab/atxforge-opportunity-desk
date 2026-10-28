@@ -1,3 +1,4 @@
+import { TEAM } from "@/config/team";
 import type {
   Flexibility,
   OpportunityStatus,
@@ -20,12 +21,9 @@ export const TRACK_TAB_LABELS = {
   "poor-fit": "Poor Fit",
 } as const;
 
-export const SKILL_LABELS: Record<SkillPartner, string> = {
-  Peter: "Peter · Offer / CMO",
-  Wilson: "Wilson · Systems",
-  "Dev Shop": "Dev Shop · Eng",
-  "Creative & Deploy": "Creative & Deploy",
-};
+export const SKILL_LABELS = Object.fromEntries(
+  TEAM.map((m) => [m.id, m.label])
+) as Record<SkillPartner, string>;
 
 export const FLEX_STYLES: Record<
   Flexibility,
