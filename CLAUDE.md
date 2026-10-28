@@ -39,7 +39,7 @@ Path alias: `@/*` -> `src/*`.
 
 Append to `raw` in `src/data/opportunities.ts` with all required `Opportunity` fields except `score`. Optional `screenshotPath` points under `public/` (e.g. `/screenshots/placeholder-dossier.svg`). See README.md for a full skeleton.
 
-Provenance must be honest: seed/research rows set `sample: true`, and never describe seeded data as a live scrape. `contextExcerpt` should be the exact source language that triggered the flag, since scoring regexes and the dossier both read it.
+Provenance must be honest: seed/research rows set `sample: true`, and never describe seeded data as a live scrape. `contextExcerpt` is the source text that triggered the flag (scoring regexes and the dossier both read it). Show it in quote marks only when it is verbatim; otherwise it is a summary in our own words. Real leads never go in `opportunities.ts`: that file ships in the public client bundle.
 
 ## Domain vocabulary
 
