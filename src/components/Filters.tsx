@@ -1,5 +1,6 @@
 "use client";
 
+import { TEAM_IDS } from "@/config/team";
 import type {
   Flexibility,
   SalarySignal,
@@ -42,12 +43,7 @@ const FLEX: Array<Flexibility | "All"> = [
   "Unknown",
 ];
 
-const SKILLS: SkillPartner[] = [
-  "Peter",
-  "Wilson",
-  "Dev Shop",
-  "Creative & Deploy",
-];
+const SKILLS: SkillPartner[] = TEAM_IDS;
 
 const SOURCES: Array<SourceType | "All"> = [
   "All",

@@ -1,5 +1,7 @@
 /** ATXFORGE Opportunity Desk — ingest schema for scrapers & manual dossiers */
 
+import type { TeamMemberId } from "@/config/team";
+
 export type Track =
   | "hire-replacement"
   | "flexible"
@@ -22,11 +24,8 @@ export type SalarySignal =
 
 export type Flexibility = "Flexible" | "Rigid" | "Unknown";
 
-export type SkillPartner =
-  | "Peter"
-  | "Wilson"
-  | "Dev Shop"
-  | "Creative & Deploy";
+/** Roster ids from src/config/team.ts (people and capability lanes) */
+export type SkillPartner = TeamMemberId;
 
 export type SourceType =
   | "Job board"
