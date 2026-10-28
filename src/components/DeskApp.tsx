@@ -16,6 +16,7 @@ import {
   type FilterState,
   type TrackTab,
 } from "@/lib/filters";
+import { STATUS_OPTIONS } from "@/lib/labels";
 import { DossierDrawer } from "./DossierDrawer";
 import { Filters } from "./Filters";
 import { Header } from "./Header";
@@ -25,11 +26,78 @@ import { StatsRow } from "./StatsRow";
 import { TrackTabs } from "./TrackTabs";
 import { ValueStrip } from "./ValueStrip";
 
+// Interim: status lives in this browser's localStorage until the shared
+// store lands. Bump the version if the shape changes.
+const STATUS_KEY = "atxforge-desk:status:v1";
+const DOSSIER_PARAM = "d";
+
+type StatusMap = Record<string, OpportunityStatus>;
+
+function readStatusMap(): StatusMap {
+  try {
+    const raw = window.localStorage.getItem(STATUS_KEY);
+    if (!raw) return {};
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return {};
+    const out: StatusMap = {};
+    for (const [id, status] of Object.entries(parsed)) {
+      if (STATUS_OPTIONS.includes(status as OpportunityStatus)) {
+        out[id] = status as OpportunityStatus;
+      }
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+function writeStatus(id: string, status: OpportunityStatus) {
+  try {
+    const next = { ...readStatusMap(), [id]: status };
+    window.localStorage.setItem(STATUS_KEY, JSON.stringify(next));
+  } catch {
+    // Storage blocked or full: the change still applies for this session.
+  }
+}
+
+/** Keep ?d=<id> in sync with the open dossier, preserving the track hash. */
+function writeDossierParam(id: string | null) {
+  const url = new URL(window.location.href);
+  if (id) url.searchParams.set(DOSSIER_PARAM, id);
+  else url.searchParams.delete(DOSSIER_PARAM);
+  if (url.href !== window.location.href) {
+    window.history.replaceState(null, "", url.href);
+  }
+}
+
 export function DeskApp() {
   const [items, setItems] = useState<Opportunity[]>(seedOpportunities);
   const [tab, setTab] = useState<TrackTab>("all");
   const [filters, setFilters] = useState<FilterState>(defaultFilters);
   const [activeId, setActiveId] = useState<string | null>(null);
+
+  // Apply saved status after mount so server and first client render match.
+  // Ids no longer in the seed data are ignored.
+  useEffect(() => {
+    const saved = readStatusMap();
+    if (Object.keys(saved).length === 0) return;
+    setItems((prev) =>
+      prev.map((o) => (saved[o.id] ? { ...o, status: saved[o.id] } : o))
+    );
+  }, []);
+
+  // Open the dossier named in ?d= on load, if it exists.
+  useEffect(() => {
+    const id = new URL(window.location.href).searchParams.get(DOSSIER_PARAM);
+    if (!id) return;
+    if (seedOpportunities.some((o) => o.id === id)) setActiveId(id);
+    else writeDossierParam(null);
+  }, []);
+
+  const openDossier = useCallback((id: string | null) => {
+    setActiveId(id);
+    writeDossierParam(id);
+  }, []);
 
   useEffect(() => {
     const apply = () => setTab(trackFromHash(window.location.hash));
@@ -61,6 +129,7 @@ export function DeskApp() {
     setItems((prev) =>
       prev.map((o) => (o.id === id ? { ...o, status } : o))
     );
+    writeStatus(id, status);
   }, []);
 
   return (
@@ -140,7 +209,7 @@ export function DeskApp() {
                   key={o.id}
                   opportunity={o}
                   index={i}
-                  onOpen={setActiveId}
+                  onOpen={openDossier}
                 />
               ))}
             </div>
@@ -159,7 +228,7 @@ export function DeskApp() {
 
       <DossierDrawer
         opportunity={active}
-        onClose={() => setActiveId(null)}
+        onClose={() => openDossier(null)}
         onStatusChange={onStatusChange}
       />
     </div>
