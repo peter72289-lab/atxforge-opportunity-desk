@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-ATXFORGE Opportunity Desk: a single-page Next.js 14 (App Router) + TypeScript + Tailwind + Framer Motion app that curates senior roles (VP / Director / Co-founder / $100k+ / fractional) a multi-partner micro-agency could cover instead of one full-time hire. v1 has no backend, no auth, no API routes: all data is static TypeScript seed data.
+ATXFORGE Opportunity Desk: a single-page Next.js 15 (App Router) + TypeScript + Tailwind + Framer Motion app that curates senior roles (VP / Director / Co-founder / $100k+ / fractional) a multi-partner micro-agency could cover instead of one full-time hire. v1 has no backend, no auth, no API routes: all data is static TypeScript seed data.
 
 ## Commands
 
