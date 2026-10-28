@@ -235,7 +235,7 @@ export function DossierDrawer({
                   ))}
                 </div>
                 <p className="mt-2 font-mono text-[10px] text-ink-500">
-                  Status is local to this session (v1 · no backend).
+                  Status is saved in this browser only.
                 </p>
               </section>
             </div>
