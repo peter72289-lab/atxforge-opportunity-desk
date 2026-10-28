@@ -8,7 +8,7 @@ ATXFORGE Opportunity Desk: a single-page Next.js 14 (App Router) + TypeScript + 
 
 ## Commands
 
-This is a Next.js project with npm scripts; no lockfile is committed, so `bun install` works fine (global preference is Bun).
+Package manager and test runner are Bun; `bun.lock` is committed, so install with `bun install --frozen-lockfile` in CI.
 
 ```bash
 bun install
