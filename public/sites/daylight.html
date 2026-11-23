@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ATXFORGE Daylight</title>
+<meta name="description" content="ATXFORGE is a four-partner build collective. Product, engineering, growth and monetization for leaders with more ideas than bandwidth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,100..125,400..900;1,100..125,400..700&family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* ============ ATXFORGE — daylight edition ============
+   Deliberate single-theme design: white studio light, ink type,
+   highlighter yellow, electric blue, mint and coral.            */
+:root{
+  --paper:#FFFFFF;
+  --paper-2:#F4F6FC;
+  --paper-3:#EDF0FA;
+  --ink:#0C0E1A;
+  --ink-2:#41465C;
+  --ink-3:#6C7189;
+  --line:#DDE2F0;
+  --pop:#FFD831;          /* highlighter */
+  --pop-deep:#E9B800;
+  --blue:#3A5BFF;         /* electric */
+  --blue-ink:#1B2FA8;
+  --mint:#0FC6A4;
+  --coral:#FF5A45;
+  --lav:#EFEBFF;
+  --glow-blue:0 0 0 0 rgba(58,91,255,.5);
+  --shadow-sm:0 2px 0 var(--line);
+  --shadow:0 18px 40px -26px rgba(12,14,26,.45);
+  --shadow-lg:0 40px 80px -48px rgba(12,14,26,.55);
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --r:14px;
+  --max:1200px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:clamp(18px,4vw,44px)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+h1,h2,h3,h4{font-family:var(--display);margin:0;letter-spacing:-.03em;line-height:1;font-variation-settings:"wdth" 112;text-wrap:balance}
+h1{font-weight:800}h2{font-weight:800}h3{font-weight:700}
+h1,h2,h3,h4{overflow-wrap:break-word}
+p{margin:0}
+button{font:inherit;color:inherit}
+.lede{font-size:clamp(19px,1.7vw,23px);line-height:1.5;color:var(--ink-2);max-width:62ch}
+.label{font-family:var(--mono);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.fine{font-size:15px;line-height:1.5;color:var(--ink-3)}
+mark{background:linear-gradient(transparent 12%,var(--pop) 12%,var(--pop) 88%,transparent 88%);color:inherit;padding:0 .08em;border-radius:2px}
+.hl{background-image:linear-gradient(var(--pop),var(--pop));background-repeat:no-repeat;background-position:0 62%;background-size:0 .86em;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .06em;border-radius:4px;animation:sweep .85s cubic-bezier(.2,.8,.2,1) .35s forwards}
+@keyframes sweep{to{background-size:100% .86em}}
+
+/* ---------- Buttons ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;text-decoration:none;font-family:var(--body);font-weight:700;font-size:17px;padding:16px 26px;border-radius:999px;background:var(--ink);color:var(--paper);transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .2s}
+.btn .arr{transition:transform .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px -12px rgba(12,14,26,.6)}
+.btn:hover .arr{transform:translateX(4px)}
+.btn:active{transform:translateY(0)}
+.btn.pop{background:var(--pop);color:var(--ink)}
+.btn.pop:hover{box-shadow:0 0 0 6px rgba(255,216,49,.35),0 14px 34px -14px rgba(233,184,0,.9)}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.blue:hover{box-shadow:0 0 0 6px rgba(58,91,255,.22),0 16px 36px -14px rgba(58,91,255,.9)}
+.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+.btn.line:hover{box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.sm{padding:11px 18px;font-size:16px}
+
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:70;background:rgba(255,255,255,.82);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:26px;height:74px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand b{font-family:var(--display);font-weight:900;font-size:20px;letter-spacing:.02em;font-variation-settings:"wdth" 120}
+.spark{width:34px;height:34px;border-radius:10px;background:var(--ink);display:grid;place-items:center;flex:none;transition:transform .3s}
+.brand:hover .spark{transform:rotate(-8deg) scale(1.06)}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{text-decoration:none;font-size:16px;font-weight:600;color:var(--ink-2);position:relative}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:3px;border-radius:2px;background:var(--pop);transform:scaleX(0);transform-origin:left;transition:transform .22s}
+.nav ul a:hover{color:var(--ink)}
+.nav ul a:hover::after{transform:scaleX(1)}
+@media (max-width:1000px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+@media (max-width:430px){.nav .wrap{gap:12px}.brand b{font-size:17px}.spark{width:30px;height:30px}.nav .btn.sm{padding:10px 14px;font-size:15px}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;padding-block:clamp(44px,6vw,86px) clamp(52px,7vw,96px)}
+.aurora{position:absolute;inset:-20% -10% auto -10%;height:120%;z-index:-2;pointer-events:none;filter:blur(60px);opacity:.55}
+.aurora i{position:absolute;border-radius:50%;display:block}
+.a1{width:46vw;height:46vw;left:-6vw;top:-8vw;background:radial-gradient(circle,rgba(58,91,255,.55),transparent 66%)}
+.a2{width:38vw;height:38vw;right:2vw;top:-4vw;background:radial-gradient(circle,rgba(255,216,49,.75),transparent 64%)}
+.a3{width:34vw;height:34vw;right:22vw;top:26vw;background:radial-gradient(circle,rgba(15,198,164,.5),transparent 66%)}
+.grid-fade{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(120% 80% at 50% 0,#000,transparent 72%);mask-image:radial-gradient(120% 80% at 50% 0,#000,transparent 72%);opacity:.5}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:clamp(28px,4vw,64px);align-items:center}
+.pill{display:inline-flex;align-items:center;gap:10px;max-width:100%;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:15px;font-weight:600;box-shadow:var(--shadow-sm)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(15,198,164,.7);animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(15,198,164,.7)}70%{box-shadow:0 0 0 12px rgba(15,198,164,0)}100%{box-shadow:0 0 0 0 rgba(15,198,164,0)}}
+.hero h1{font-size:clamp(38px,6.6vw,92px);line-height:.94;margin:22px 0 0;font-variation-settings:"wdth" 108}
+.hero .lede{margin-top:26px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+.hero-sub{margin-top:18px;font-size:16px;color:var(--ink-3)}
+
+/* robot */
+.bot-stage{position:relative;display:grid;place-items:center;min-height:360px}
+.bot{width:min(100%,380px);height:auto;filter:drop-shadow(0 30px 40px rgba(12,14,26,.18));animation:hover 5.5s ease-in-out infinite}
+@keyframes hover{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.chip-card{position:absolute;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);font-size:15px;font-weight:600;display:flex;gap:10px;align-items:center;white-space:nowrap}
+.chip-card .tag{font-family:var(--mono);font-size:14px;padding:2px 8px;border-radius:6px}
+.cc1{top:6%;left:-2%;animation:drift 7s ease-in-out infinite}
+.cc2{bottom:16%;right:-4%;animation:drift 8.5s ease-in-out .8s infinite}
+.cc3{bottom:2%;left:4%;animation:drift 6.4s ease-in-out .4s infinite}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+@media (max-width:920px){.hero-grid{grid-template-columns:minmax(0,1fr)}.bot-stage{min-height:300px;margin-top:20px}.cc1,.cc2,.cc3{position:static;animation:none;margin:6px}.bot-stage{display:flex;flex-direction:column}}
+
+.ticker{margin-top:clamp(40px,6vw,72px);border-block:2px solid var(--ink);padding:16px 0;overflow:hidden;display:flex;gap:0;background:var(--pop)}
+.ticker-in{display:flex;gap:44px;white-space:nowrap;animation:roll 28s linear infinite;font-family:var(--display);font-weight:800;font-size:clamp(20px,2.3vw,30px);letter-spacing:-.02em;padding-right:44px}
+.ticker:hover .ticker-in{animation-play-state:paused}
+@keyframes roll{to{transform:translateX(-50%)}}
+.ticker-in span{display:inline-flex;align-items:center;gap:44px}
+.ticker-in i{width:12px;height:12px;border-radius:50%;background:var(--ink);display:inline-block}
+
+/* ---------- Section frame ---------- */
+section.block{padding-block:clamp(72px,9vw,124px);position:relative}
+section.tint{background:var(--paper-2)}
+.sec-head{max-width:900px;margin-bottom:clamp(34px,5vw,56px)}
+.sec-head h2{font-size:clamp(34px,5.2vw,68px);margin-top:16px}
+.sec-head .lede{margin-top:20px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-ink);background:var(--lav);border-radius:999px;padding:7px 14px}
+
+/* slide-ins */
+.js .sl{opacity:0;transform:translateY(34px);transition:opacity .75s cubic-bezier(.2,.8,.2,1),transform .75s cubic-bezier(.2,.8,.2,1)}
+.js .sl-l{transform:translateX(-46px)}
+.js .sl-r{transform:translateX(46px)}
+.js .sl.in{opacity:1;transform:none}
+.js .stagger>*{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1)}
+.js .stagger.in>*{opacity:1;transform:none}
+
+/* ---------- Chat ---------- */
+.chat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(26px,4vw,60px);align-items:center}
+.thread{display:grid;gap:14px;min-height:340px;align-content:start}
+.bub{max-width:88%;padding:16px 20px;border-radius:20px;font-size:17px;line-height:1.45;box-shadow:var(--shadow);animation:pop .45s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}}
+.bub.them{background:var(--paper);border:1px solid var(--line);justify-self:start;border-bottom-left-radius:6px}
+.bub.us{background:var(--ink);color:var(--paper);justify-self:end;border-bottom-right-radius:6px}
+.bub .who{display:block;font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+.chat-ctl{display:flex;align-items:center;gap:14px;margin-top:22px;flex-wrap:wrap}
+@media (max-width:860px){.chat{grid-template-columns:1fr}}
+
+/* ---------- Roles ---------- */
+.role-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.rt{border:2px solid var(--line);background:var(--paper);border-radius:999px;padding:11px 20px;font-weight:700;font-size:16px;cursor:pointer;color:var(--ink-2);transition:all .2s cubic-bezier(.2,.8,.2,1)}
+.rt:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-2px)}
+.rt[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper);box-shadow:0 10px 24px -12px rgba(12,14,26,.8)}
+.role-card{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);box-shadow:10px 10px 0 var(--pop);overflow:hidden}
+.role-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:0}
+.role-say{padding:clamp(24px,3vw,40px);border-right:2px solid var(--ink)}
+.role-say .q{font-family:var(--display);font-weight:700;font-size:clamp(24px,2.8vw,38px);line-height:1.08;letter-spacing:-.02em}
+.role-say p{margin-top:18px;color:var(--ink-2);font-size:17px}
+.role-get{padding:clamp(24px,3vw,40px);background:var(--paper-2)}
+.role-get h4{font-family:var(--mono);font-size:14px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+.tick{list-style:none;margin:0;padding:0;display:grid;gap:13px;font-size:17px}
+.tick li{display:grid;grid-template-columns:26px 1fr;gap:10px;line-height:1.4}
+.tick li::before{content:"";width:20px;height:20px;margin-top:3px;border-radius:6px;background:var(--blue);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.role-foot{border-top:2px solid var(--ink);padding:18px clamp(24px,3vw,40px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:17px}
+@media (max-width:860px){.role-top{grid-template-columns:1fr}.role-say{border-right:0;border-bottom:2px solid var(--ink)}}
+
+/* ---------- Run the board ---------- */
+.board{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);padding:clamp(20px,3vw,34px);box-shadow:var(--shadow-lg)}
+.board-head{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.idea-picks{display:flex;flex-wrap:wrap;gap:10px}
+.ip{border:2px solid var(--line);background:var(--paper);border-radius:10px;padding:10px 16px;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s}
+.ip:hover{border-color:var(--blue);color:var(--blue-ink);transform:translateY(-2px)}
+.ip[aria-pressed="true"]{border-color:var(--ink);background:var(--pop)}
+.track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;position:relative}
+.stage{border:2px dashed var(--line);border-radius:12px;padding:18px;min-height:190px;background:var(--paper-2);transition:border-color .3s,background .3s,box-shadow .3s}
+.stage.live{border-style:solid;border-color:var(--ink);background:var(--paper);box-shadow:0 16px 34px -22px rgba(12,14,26,.7)}
+.stage.done{border-style:solid;border-color:var(--mint);background:rgba(15,198,164,.08)}
+.stage .num{font-family:var(--mono);font-size:14px;color:var(--ink-3)}
+.stage h4{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin:8px 0 10px}
+.stage p{font-size:16px;color:var(--ink-2);line-height:1.45}
+.puck{margin-top:14px;display:none;font-size:15px;font-weight:700;background:var(--ink);color:var(--paper);border-radius:8px;padding:9px 12px;animation:pop .4s cubic-bezier(.2,.9,.3,1.2) both}
+.stage.live .puck{display:block}
+.board-foot{margin-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+#runOut{font-size:17px;font-weight:600}
+@media (max-width:900px){.track{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.track{grid-template-columns:1fr}.stage{min-height:0}}
+
+/* ---------- Lanes ---------- */
+.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.lane{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px 28px;overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s}
+.lane::after{content:"";position:absolute;inset:auto -30% -60% -30%;height:70%;background:radial-gradient(circle at 50% 100%,var(--glow,rgba(58,91,255,.3)),transparent 70%);opacity:0;transition:opacity .3s}
+.lane:hover{transform:translateY(-6px);border-color:var(--ink);box-shadow:var(--shadow)}
+.lane:hover::after{opacity:1}
+.lane .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px}
+.lane h3{font-size:26px;margin-bottom:10px}
+.lane p{font-size:17px;color:var(--ink-2)}
+.lane ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px;font-size:16px;color:var(--ink-2)}
+.lane ul li{padding-left:18px;position:relative}
+.lane ul li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:2px;background:var(--ink-3);border-radius:2px}
+@media (max-width:1000px){.lanes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.lanes{grid-template-columns:1fr}}
+
+/* ---------- Versus ---------- */
+.vs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.vs-card{border-radius:var(--r);padding:28px 26px;border:1px solid var(--line);background:var(--paper)}
+.vs-card.hero-card{background:var(--ink);color:var(--paper);border-color:var(--ink);box-shadow:0 30px 60px -34px rgba(12,14,26,.9)}
+.vs-card h3{font-size:24px;margin-bottom:14px}
+.vs-card ul{list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:17px;color:var(--ink-2)}
+.vs-card.hero-card ul{color:rgba(255,255,255,.82)}
+.vs-card li{display:grid;grid-template-columns:24px 1fr;gap:10px;line-height:1.4}
+.vs-card li span{font-weight:800}
+.x{color:var(--coral)}
+.ok{color:var(--mint)}
+@media (max-width:900px){.vs{grid-template-columns:1fr}}
+
+/* ---------- Marquee verticals ---------- */
+.mq{overflow:hidden;padding:8px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-in{display:flex;gap:14px;white-space:nowrap;width:max-content;animation:roll 42s linear infinite}
+.mq.rev .mq-in{animation-direction:reverse;animation-duration:50s}
+.mq:hover .mq-in{animation-play-state:paused}
+.vtag{font-family:var(--display);font-weight:700;font-size:clamp(18px,2vw,26px);letter-spacing:-.02em;border:2px solid var(--line);border-radius:999px;padding:9px 20px;background:var(--paper);transition:all .2s}
+.vtag:hover{border-color:var(--ink);background:var(--pop);transform:translateY(-2px)}
+
+/* ---------- Team ---------- */
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.flip{perspective:1200px;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.flip-in{position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.9,.3,1)}
+.flip[aria-pressed="true"] .flip-in{transform:rotateY(180deg)}
+.face{border-radius:var(--r);border:2px solid var(--ink);padding:24px;min-height:330px;display:flex;flex-direction:column;gap:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face.front{background:var(--paper);box-shadow:8px 8px 0 var(--lav)}
+.face.back{position:absolute;inset:0;transform:rotateY(180deg);background:var(--ink);color:var(--paper);box-shadow:8px 8px 0 var(--blue)}
+.face.back p{color:rgba(255,255,255,.84);font-size:16px}
+.avatar{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:-.02em;border:2px solid var(--ink)}
+.face h3{font-size:24px}
+.face .role{font-family:var(--mono);font-size:14px;color:var(--blue-ink)}
+.face p{font-size:16px;color:var(--ink-2);line-height:1.45}
+.flipnote{margin-top:auto;font-family:var(--mono);font-size:14px;color:var(--ink-3)}
+.face.back .flipnote{color:rgba(255,255,255,.6)}
+@media (max-width:980px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.team{grid-template-columns:1fr}}
+
+/* ---------- Partner models ---------- */
+.models{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.model{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:30px 28px;display:flex;flex-direction:column;gap:14px;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+.model:hover{transform:translateY(-6px);border-color:var(--ink);box-shadow:var(--shadow)}
+.model.star{border-color:var(--ink);background:linear-gradient(180deg,rgba(255,216,49,.22),var(--paper) 42%)}
+.model h3{font-size:28px}
+.model p{font-size:17px;color:var(--ink-2)}
+.model ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:16px;color:var(--ink-2)}
+.model li{padding-left:22px;position:relative}
+.model li::before{content:"→";position:absolute;left:0;color:var(--blue)}
+.model .who{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);font-size:16px}
+@media (max-width:900px){.models{grid-template-columns:1fr}}
+
+/* ---------- Fit check ---------- */
+.fit{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:start}
+.qlist{display:grid;gap:14px}
+.qrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:18px 20px;transition:border-color .2s,transform .2s}
+.qrow:hover{border-color:var(--ink)}
+.qrow p{font-size:17px;line-height:1.4;font-weight:600}
+.yn{display:inline-flex;border:2px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
+.yn button{border:0;background:transparent;padding:10px 18px;font-weight:700;font-size:16px;cursor:pointer;color:var(--ink-3);transition:all .18s}
+.yn button:hover{color:var(--ink)}
+.yn button + button{border-left:2px solid var(--line)}
+.yn button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.scorebox{position:sticky;top:96px;background:var(--ink);color:var(--paper);border-radius:var(--r);padding:30px;box-shadow:0 30px 60px -34px rgba(12,14,26,.9);display:grid;gap:14px}
+.meterwrap{display:flex;gap:6px}
+.meterwrap i{flex:1;height:40px;border-radius:8px;background:rgba(255,255,255,.14);transition:background .3s,transform .3s}
+.scorebox h3{font-size:28px}
+.scorebox p{font-size:17px;color:rgba(255,255,255,.82)}
+.botmini{width:54px;height:54px}
+@media (max-width:900px){.fit{grid-template-columns:1fr}.scorebox{position:static}}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:12px;max-width:940px}
+.faq details{background:var(--paper);border:2px solid var(--line);border-radius:12px;transition:border-color .2s,box-shadow .2s}
+.faq details[open]{border-color:var(--ink);box-shadow:var(--shadow)}
+.faq summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr 34px;gap:16px;align-items:center;padding:20px 22px;font-family:var(--display);font-weight:700;font-size:clamp(19px,2vw,24px);letter-spacing:-.02em;line-height:1.2}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";justify-self:end;font-family:var(--mono);font-size:26px;color:var(--ink-3);transition:transform .25s,color .25s}
+.faq details[open] summary::after{transform:rotate(45deg);color:var(--blue)}
+.faq .a{padding:0 22px 22px;font-size:17px;color:var(--ink-2);max-width:72ch}
+
+/* ---------- CTA ---------- */
+.cta{position:relative;overflow:hidden;background:var(--pop);padding-block:clamp(66px,9vw,120px);border-top:2px solid var(--ink)}
+.cta-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:clamp(30px,5vw,68px);align-items:start}
+.cta h2{font-size:clamp(40px,6.4vw,88px);line-height:.94}
+.cta .lede{color:rgba(12,14,26,.8);margin-top:22px}
+.cta ul{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px;font-size:17px;font-weight:600}
+.cta ul li{display:grid;grid-template-columns:28px 1fr;gap:10px}
+.cta ul li::before{content:"✦";color:var(--ink)}
+form.brief{background:var(--paper);border:2px solid var(--ink);border-radius:var(--r);padding:clamp(22px,3vw,34px);display:grid;gap:16px;box-shadow:10px 10px 0 var(--ink)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:grid;gap:7px}
+.field label{font-size:15px;font-weight:700;color:var(--ink-2)}
+.field input,.field select,.field textarea{font:inherit;font-size:17px;color:var(--ink);background:var(--paper-2);border:2px solid var(--line);border-radius:10px;padding:13px 14px;width:100%;transition:border-color .2s,background .2s}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);background:var(--paper)}
+form.brief .btn{justify-content:center}
+.formnote{font-size:15px;color:var(--ink-3);text-align:center}
+@media (max-width:900px){.cta-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.f2{grid-template-columns:1fr}}
+
+footer.site{background:var(--ink);color:rgba(255,255,255,.7);padding-block:34px;font-size:16px}
+footer.site .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+footer.site a{text-decoration:none}
+footer.site a:hover{color:#fff}
+footer.site nav{display:flex;gap:22px;flex-wrap:wrap}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:90}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .sl,.js .stagger>*{opacity:1!important;transform:none!important}
+  .hl::before{transform:scaleX(1)}
+  .ticker-in,.mq-in{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <span class="spark" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20"><path d="M11.4 1.5 4 11.2h4.2L7.4 18.5 15.6 8.4h-4.4z" style="fill:var(--pop)"/></svg>
+      </span>
+      <b>ATXFORGE</b>
+    </a>
+    <ul>
+      <li><a href="#sound-familiar">Sound familiar?</a></li>
+      <li><a href="#who">Who we build for</a></li>
+      <li><a href="#work">How we work</a></li>
+      <li><a href="#team">The four of us</a></li>
+      <li><a href="#partner">Partnership</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn pop sm" href="#start">Book a call <span class="arr">→</span></a>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <div class="grid-fade" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><span class="dot" aria-hidden="true"></span> Austin, TX · four partners · taking on new partnerships</span>
+      <h1>Let's build the thing you keep <span class="hl">talking about</span>.</h1>
+      <p class="lede">You have the idea. You probably have the market. What you don't have is a team free enough, senior enough, and fast enough to go build it. That's us. Four partners covering product, engineering, growth and monetization, working as your outside build team.</p>
+      <div class="hero-cta">
+        <a class="btn pop" href="#start" data-fx>Book a 30-minute call <span class="arr">→</span></a>
+        <a class="btn line" href="#work">See how we work</a>
+      </div>
+      <p class="hero-sub">No pitch deck, no discovery theater. Bring the idea that's been sitting in your notes app.</p>
+    </div>
+
+    <div class="bot-stage">
+      <!-- FORGEBOT -->
+      <svg class="bot" viewBox="0 0 320 320" role="img" aria-label="Friendly robot mascot holding a hammer">
+        <defs>
+          <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E9EDFA"/>
+          </linearGradient>
+          <linearGradient id="visor" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0C0E1A"/><stop offset="1" stop-color="#232A4D"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="160" cy="292" rx="86" ry="12" fill="#0C0E1A" opacity=".10"/>
+        <!-- antenna -->
+        <line x1="160" y1="44" x2="160" y2="66" stroke="#0C0E1A" stroke-width="6" stroke-linecap="round"/>
+        <circle id="bulb" cx="160" cy="36" r="11" fill="#FFD831" stroke="#0C0E1A" stroke-width="5"/>
+        <!-- arms -->
+        <path d="M58 168c-14 6-18 26-6 36" fill="none" stroke="#0C0E1A" stroke-width="10" stroke-linecap="round"/>
+        <g id="arm">
+          <path d="M262 170c16 4 22 24 10 36" fill="none" stroke="#0C0E1A" stroke-width="10" stroke-linecap="round"/>
+          <rect x="258" y="196" width="34" height="16" rx="6" fill="#3A5BFF" stroke="#0C0E1A" stroke-width="5"/>
+          <rect x="268" y="150" width="14" height="52" rx="5" fill="#FF5A45" stroke="#0C0E1A" stroke-width="5"/>
+        </g>
+        <!-- head -->
+        <rect x="88" y="62" width="144" height="112" rx="34" fill="url(#body)" stroke="#0C0E1A" stroke-width="6"/>
+        <rect x="106" y="86" width="108" height="62" rx="26" fill="url(#visor)"/>
+        <g id="eyes">
+          <circle class="eye" cx="139" cy="117" r="10" fill="#0FC6A4"/>
+          <circle class="eye" cx="181" cy="117" r="10" fill="#0FC6A4"/>
+        </g>
+        <rect id="lid" x="106" y="86" width="108" height="0" rx="8" fill="#0C0E1A"/>
+        <!-- body -->
+        <rect x="76" y="182" width="168" height="104" rx="30" fill="url(#body)" stroke="#0C0E1A" stroke-width="6"/>
+        <rect x="100" y="206" width="120" height="30" rx="10" fill="#FFD831" stroke="#0C0E1A" stroke-width="5"/>
+        <circle cx="120" cy="260" r="9" fill="#3A5BFF" stroke="#0C0E1A" stroke-width="4"/>
+        <circle cx="152" cy="260" r="9" fill="#FF5A45" stroke="#0C0E1A" stroke-width="4"/>
+        <circle cx="184" cy="260" r="9" fill="#0FC6A4" stroke="#0C0E1A" stroke-width="4"/>
+      </svg>
+      <div class="chip-card cc1"><span class="tag" style="background:var(--lav);color:var(--blue-ink)">idea</span> Membership tier for power users</div>
+      <div class="chip-card cc2"><span class="tag" style="background:rgba(15,198,164,.16);color:#07705E">live</span> Shipped in weeks, not quarters</div>
+      <div class="chip-card cc3"><span class="tag" style="background:var(--pop);color:var(--ink)">us</span> Four senior partners, one channel</div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-in">
+      <span>Product <i></i> Engineering <i></i> Brand <i></i> Offers <i></i> Funnels <i></i> Paid creative <i></i> AI workflows <i></i> Launches <i></i> Internal tools <i></i></span>
+      <span>Product <i></i> Engineering <i></i> Brand <i></i> Offers <i></i> Funnels <i></i> Paid creative <i></i> AI workflows <i></i> Launches <i></i> Internal tools <i></i></span>
+    </div>
+  </div>
+</header>
+
+<!-- ========== SOUND FAMILIAR ========== -->
+<section class="block" id="sound-familiar">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">Sound familiar?</span>
+      <h2>Every leader we meet says a version of the same thing.</h2>
+      <p class="lede">Not "we don't know what to do." It's "we know exactly what to do, and we can't get to it." Here's how that conversation usually goes. Tap through it.</p>
+    </div>
+    <div class="chat">
+      <div>
+        <div class="thread" id="thread" aria-live="polite"></div>
+        <div class="chat-ctl">
+          <button class="btn blue" id="chatNext" type="button">Keep going <span class="arr">→</span></button>
+          <button class="btn line sm" id="chatReset" type="button">Start over</button>
+        </div>
+      </div>
+      <div class="sl sl-r">
+        <div class="role-card" style="box-shadow:10px 10px 0 var(--lav)">
+          <div class="role-say" style="border-right:0">
+            <p class="q">The gap isn't strategy. It's hands on keyboards.</p>
+            <p>Hiring takes a quarter before anyone writes a line of code. Agencies sell you the senior people and staff you with juniors. Freelancers leave you as the project manager. Meanwhile the idea ages, the champion moves on, and someone with fewer meetings ships a version of it.</p>
+            <p style="margin-top:16px"><strong>We're the fourth option:</strong> a small group of senior operators who plug in, build the thing, launch it, and stay for what comes next.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHO ========== -->
+<section class="block tint" id="who">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">Who we build for</span>
+      <h2>You're the one with the list. Pick your seat.</h2>
+      <p class="lede">Different titles, same bottleneck. Choose yours and we'll tell you exactly what we'd take off your plate.</p>
+    </div>
+    <div class="role-tabs" role="tablist" aria-label="Choose your role" id="roleTabs"></div>
+    <div class="role-card sl" role="tabpanel" id="rolePanel" aria-live="polite">
+      <div class="role-top">
+        <div class="role-say">
+          <p class="q" id="rq"></p>
+          <p id="rb"></p>
+        </div>
+        <div class="role-get">
+          <h4>What we'd take off your plate</h4>
+          <ul class="tick" id="rl"></ul>
+        </div>
+      </div>
+      <div class="role-foot"><span id="rf"></span><a class="btn blue sm" href="#start">Talk it through <span class="arr">→</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW WE WORK ========== -->
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">How we work</span>
+      <h2>Four lanes. One team. No handoffs.</h2>
+      <p class="lede">Most ideas die in the gaps between people: strategist to designer, designer to engineer, engineer to marketer. We don't have those gaps, because the people who shape the idea are the same ones who build it and launch it.</p>
+    </div>
+
+    <div class="lanes stagger">
+      <article class="lane" style="--glow:rgba(255,216,49,.45)">
+        <div class="ic" style="background:var(--pop)">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M5 7l2 2M19 7l-2 2M9 20h6M10 17h4a5 5 0 1 0-4 0z" fill="none" stroke="#0C0E1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Shape</h3>
+        <p>We pressure-test the idea before anyone opens an editor, so you build the version people actually pay for.</p>
+        <ul><li>Offer, positioning and pricing</li><li>Who it's for and why now</li><li>The smallest version that proves it</li><li>An honest keep-or-kill call</li></ul>
+      </article>
+      <article class="lane" style="--glow:rgba(58,91,255,.4)">
+        <div class="ic" style="background:var(--lav)">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" fill="none" stroke="var(--blue-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Build</h3>
+        <p>Real software and real sites, built by senior hands. You see working pieces every week, not a big reveal at the end.</p>
+        <ul><li>Web apps and MVPs</li><li>Commerce, membership and checkout</li><li>AI-assisted workflows</li><li>Internal tools your team will use</li></ul>
+      </article>
+      <article class="lane" style="--glow:rgba(255,90,69,.38)">
+        <div class="ic" style="background:rgba(255,90,69,.16)">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-3 2-5 5-5M14 3c4 1 7 4 7 8-4 4-8 6-12 6-1-4 1-10 5-14z" fill="none" stroke="var(--coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Launch</h3>
+        <p>The build is half the job. We write the words, cut the creative and run the launch that gets it in front of buyers.</p>
+        <ul><li>Landing pages, funnels and email</li><li>Direct-response copy that sells</li><li>Paid creative and campaigns</li><li>Tracking wired end to end</li></ul>
+      </article>
+      <article class="lane" style="--glow:rgba(15,198,164,.4)">
+        <div class="ic" style="background:rgba(15,198,164,.16)">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9 12l4 4 7-9M20 7h-4M20 7v4" fill="none" stroke="var(--mint)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Grow</h3>
+        <p>Launch day is the start. We read the numbers, fix what's leaking, scale what works, then pull the next idea off your list.</p>
+        <ul><li>Conversion and offer iteration</li><li>Creative testing</li><li>Roadmap we help own</li><li>The next build, already warmed up</li></ul>
+      </article>
+    </div>
+
+    <!-- interactive board -->
+    <div class="board sl" style="margin-top:clamp(36px,5vw,64px)">
+      <div class="board-head">
+        <div>
+          <span class="kicker">Watch an idea move</span>
+          <h3 style="font-size:clamp(24px,3vw,36px);margin-top:14px">Pick something off your list. Press go.</h3>
+        </div>
+        <button class="btn pop" id="runBtn" type="button" data-fx>Run it through <span class="arr">→</span></button>
+      </div>
+      <div class="idea-picks" id="ideaPicks" role="group" aria-label="Pick an idea"></div>
+      <div class="track" id="track" style="margin-top:22px">
+        <div class="stage" data-s="0"><span class="num">Lane 01</span><h4>Shape</h4><p id="s0">Decide what it is, who pays for it, and what the smallest provable version looks like.</p><div class="puck" id="p0"></div></div>
+        <div class="stage" data-s="1"><span class="num">Lane 02</span><h4>Build</h4><p id="s1">Design and engineering in parallel. Working software you can click every week.</p><div class="puck" id="p1"></div></div>
+        <div class="stage" data-s="2"><span class="num">Lane 03</span><h4>Launch</h4><p id="s2">Offer, pages, copy, creative and campaigns. Live in front of real buyers.</p><div class="puck" id="p2"></div></div>
+        <div class="stage" data-s="3"><span class="num">Lane 04</span><h4>Grow</h4><p id="s3">Read the signal, tune the offer, scale what converts, start the next one.</p><div class="puck" id="p3"></div></div>
+      </div>
+      <div class="board-foot">
+        <p id="runOut">Pick an idea above, then press <strong>Run it through</strong>.</p>
+        <span class="fine">This is genuinely how the work moves. The pace depends on scope, and we'll tell you ours before you sign anything.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VS ========== -->
+<section class="block tint" id="versus">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">The honest comparison</span>
+      <h2>You have four options. We're only one of them.</h2>
+      <p class="lede">Here's the trade-off with each, minus the sales pitch. If one of the other three fits better, we'll say so on the call.</p>
+    </div>
+    <div class="vs stagger">
+      <div class="vs-card">
+        <h3>Hire a team</h3>
+        <ul>
+          <li><span class="ok">+</span> Yours forever, fully dedicated</li>
+          <li><span class="x">−</span> Recruiting burns months before anything ships</li>
+          <li><span class="x">−</span> Salaries and equity before you know the idea works</li>
+          <li><span class="x">−</span> One bad hire sets the whole thing back</li>
+        </ul>
+      </div>
+      <div class="vs-card">
+        <h3>Agency or freelancers</h3>
+        <ul>
+          <li><span class="ok">+</span> Fast to start, no headcount</li>
+          <li><span class="x">−</span> Senior people pitch, juniors do the work</li>
+          <li><span class="x">−</span> Context walks out the door at handoff</li>
+          <li><span class="x">−</span> With freelancers, you become the project manager</li>
+        </ul>
+      </div>
+      <div class="vs-card hero-card">
+        <h3 style="color:var(--pop)">Partner with us</h3>
+        <ul>
+          <li><span class="ok">+</span> Four senior partners, no bench of juniors</li>
+          <li><span class="ok">+</span> One channel, one team, start to launch</li>
+          <li><span class="ok">+</span> We stay past go-live, so context compounds</li>
+          <li><span class="ok">+</span> We'll tell you when an idea isn't worth building</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== VERTICALS ========== -->
+<section class="block" id="range">
+  <div class="wrap sec-head sl">
+    <span class="kicker">Range</span>
+    <h2>Fifteen years. Dozens of industries. Patterns you can't hire for.</h2>
+    <p class="lede">A retention trick from consumer subscriptions solves a churn problem in SaaS. A compliance habit from finance saves a marketplace launch. Most of your "new" problem is one of us has already solved somewhere else.</p>
+  </div>
+  <div class="mq" aria-hidden="true"><div class="mq-in" id="mq1"></div></div>
+  <div class="mq rev" style="margin-top:14px" aria-hidden="true"><div class="mq-in" id="mq2"></div></div>
+  <div class="wrap" style="margin-top:34px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+    <p class="fine" style="max-width:62ch">Want the specifics in your category? Ask on the call and we'll walk you through the relevant work, named clients included where we're allowed to name them.</p>
+    <a class="btn line" href="#start">Ask about your industry <span class="arr">→</span></a>
+  </div>
+</section>
+
+<!-- ========== TEAM ========== -->
+<section class="block tint" id="team">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">The four of us</span>
+      <h2>Small on purpose. You get the partners, every time.</h2>
+      <p class="lede">No account managers, no handoff to a delivery team. The people on your first call are the people doing the work. Tap a card to flip it.</p>
+    </div>
+    <div class="team stagger" id="team"></div>
+  </div>
+</section>
+
+<!-- ========== MODELS ========== -->
+<section class="block" id="partner">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">Ways to work together</span>
+      <h2>Start with one idea. Stay for the list.</h2>
+      <p class="lede">Every engagement is priced to an outcome, not an hourly rate. Most partnerships start small and grow, because the second build is always faster than the first.</p>
+    </div>
+    <div class="models stagger">
+      <article class="model">
+        <span class="kicker">Prove it</span>
+        <h3>Launch Sprint</h3>
+        <p>One idea, one outcome, a fixed window. The cleanest way to find out whether the idea is real and whether you like working with us.</p>
+        <ul><li>Fixed scope and fixed price</li><li>Shape, build and launch in one push</li><li>Clear go / grow / stop call at the end</li></ul>
+        <p class="who"><strong>For:</strong> one high-conviction idea with a deadline.</p>
+      </article>
+      <article class="model star">
+        <span class="kicker">The usual home</span>
+        <h3>Embedded Partner</h3>
+        <p>We become your outside build-and-launch team. A standing monthly partnership that works your backlog in order of what makes money.</p>
+        <ul><li>Monthly partnership, roadmap set together</li><li>All four partners in one shared channel</li><li>Ideas ship back to back, context never resets</li></ul>
+        <p class="who"><strong>For:</strong> CMOs, COOs and CEOs with a list, not a project.</p>
+      </article>
+      <article class="model">
+        <span class="kicker">Skin in the game</span>
+        <h3>Venture Partner</h3>
+        <p>When the founder, the idea and the distribution line up, we'll trade fees for a stake and build it like it's ours. Because it is.</p>
+        <ul><li>Reduced fee plus equity or revenue share</li><li>We own product, growth and go-to-market</li><li>Selective, and we're upfront about why</li></ul>
+        <p class="who"><strong>For:</strong> founders and creators with an audience or an edge.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FIT ========== -->
+<section class="block tint" id="fit">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">Thirty-second fit check</span>
+      <h2>Are we right for each other?</h2>
+      <p class="lede">Five honest questions. Nobody sees your answers, and there's no email gate at the end.</p>
+    </div>
+    <div class="fit">
+      <div class="qlist sl sl-l" id="qs"></div>
+      <aside class="scorebox sl sl-r">
+        <svg class="botmini" viewBox="0 0 60 60" aria-hidden="true">
+          <rect x="10" y="12" width="40" height="32" rx="12" fill="#fff" stroke="#0C0E1A" stroke-width="3"/>
+          <rect x="17" y="20" width="26" height="16" rx="7" fill="#0C0E1A"/>
+          <circle cx="25" cy="28" r="3.4" fill="#0FC6A4"/><circle cx="35" cy="28" r="3.4" fill="#0FC6A4"/>
+          <line x1="30" y1="4" x2="30" y2="12" stroke="#0C0E1A" stroke-width="3"/><circle cx="30" cy="4" r="3.6" fill="#FFD831" stroke="#0C0E1A" stroke-width="2.4"/>
+        </svg>
+        <span class="label" style="color:rgba(255,255,255,.6)">Your read</span>
+        <div class="meterwrap" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <h3 id="fitTitle">Answer a few and I'll tell you.</h3>
+        <p id="fitBody">No trick questions. If we're not the right team for this, we'd rather you find that out in thirty seconds than three weeks.</p>
+        <a class="btn pop" href="#start" data-fx>Book the call <span class="arr">→</span></a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="sec-head sl">
+      <span class="kicker">Straight answers</span>
+      <h2>Before you get on a call with us.</h2>
+    </div>
+    <div class="faq sl">
+      <details open><summary>Are you an agency, a consultancy or a venture studio?</summary><div class="a">A bit of each, which is why we call it a collective. Like an agency, we do the actual work: product, engineering, copy, creative, launch. Like a studio, we think in ventures and we'll take equity when it fits. Unlike either, there are four of us, all senior, and we're built for long relationships instead of one-off projects.</div></details>
+      <details><summary>We're an established company, not a startup. Still a fit?</summary><div class="a">Yes, and that's a lot of our work. New product lines, new offers, new channels, internal tools, a rebuilt funnel. "New venture" doesn't have to mean "new company." It usually means a leader with a mandate and no free capacity.</div></details>
+      <details><summary>What does this cost?</summary><div class="a">It depends on scope, and we'll give you a real number before you commit to anything. Sprints are fixed scope and fixed price. Embedded partnerships are a monthly rate. Venture deals trade part of the fee for equity or revenue share. No hourly billing, no surprise change orders.</div></details>
+      <details><summary>How fast will we see something?</summary><div class="a">Faster than hiring, and you'll see working pieces every week rather than a reveal at the end. We'll commit to a real timeline once we've scoped the work, and we'd rather quote you something we can hit than something that sounds good on a website.</div></details>
+      <details><summary>Can you work with our existing team and vendors?</summary><div class="a">Happily. We'll take a lane your team doesn't have capacity for, work alongside your current agency, or run point on the whole thing. We're there to add speed, not to start a turf war.</div></details>
+      <details><summary>Can we hire you for strategy only?</summary><div class="a">Sometimes, if it's the honest first step. But it isn't where we're strongest. Our edge is that the people who make the plan also build it, and strategy without a build team is how ideas end up back on the list.</div></details>
+      <details><summary>Do we need to be in Austin?</summary><div class="a">No. We're Austin-based and work with partners anywhere. If you're local, we'll buy the coffee and bring a whiteboard.</div></details>
+      <details><summary>What actually happens on the first call?</summary><div class="a">Thirty minutes. You walk us through what's stuck, we ask the uncomfortable questions, and we tell you where we'd start and whether we're the right team. You leave with a clear next move either way.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta" id="start">
+  <div class="wrap cta-grid">
+    <div class="sl sl-l">
+      <span class="label" style="color:rgba(12,14,26,.65)">Start here</span>
+      <h2>Tell us what's stuck.</h2>
+      <p class="lede">Send the idea that keeps getting pushed to next quarter. We'll come back with a time to talk and a first take on where we'd start, in plain language.</p>
+      <ul>
+        <li>Thirty minutes with the partners who'd do the work</li>
+        <li>An honest read on the idea, even if the answer is "don't build that"</li>
+        <li>A concrete next move you can use whether or not you hire us</li>
+      </ul>
+    </div>
+    <form class="brief sl sl-r" id="brief" novalidate>
+      <div class="f2">
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="f2">
+        <div class="field"><label for="f-role">Your seat</label>
+          <select id="f-role" name="role"><option>Founder / CEO</option><option>CTO</option><option>COO</option><option>CMO</option><option>Marketing lead</option><option>Creator</option><option>Other</option></select></div>
+        <div class="field"><label for="f-co">Company or project</label><input id="f-co" name="company" autocomplete="organization"></div>
+      </div>
+      <div class="field"><label for="f-stuck">What's stuck?</label><textarea id="f-stuck" name="stuck" placeholder="We've wanted to launch a membership tier for a year. We have the audience. Nobody has time to build it."></textarea></div>
+      <div class="field"><label for="f-model">Leaning toward</label>
+        <select id="f-model" name="model"><option>Not sure yet</option><option>Launch Sprint</option><option>Embedded Partner</option><option>Venture Partner</option></select></div>
+      <button class="btn blue" type="submit">Send it to the partners <span class="arr">→</span></button>
+      <p class="formnote" id="formnote">Opens your email app with this filled in, addressed to hello@atxforge.com</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 ATXFORGE · Austin, TX · Four partners, one team.</span>
+    <nav aria-label="Footer"><a href="#work">How we work</a><a href="#partner">Partnership</a><a href="#team">Team</a><a href="mailto:hello@atxforge.com">hello@atxforge.com</a></nav>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- slide-ins ---------- */
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    if (el.classList.contains('stagger')) $$(':scope > *', el).forEach((c, i) => c.style.transitionDelay = (i * 90) + 'ms');
+    el.classList.add('in'); io.unobserve(el);
+  }), { rootMargin: '0px 0px -10% 0px', threshold: .12 });
+  $$('.sl, .stagger').forEach(el => io.observe(el));
+} else $$('.sl, .stagger').forEach(el => el.classList.add('in'));
+
+/* ---------- robot: eyes follow cursor, blinks, antenna pulses ---------- */
+(() => {
+  const eyes = $$('.eye'), lid = $('#lid'), bulb = $('#bulb'), arm = $('#arm');
+  if (!eyes.length) return;
+  const home = eyes.map(e => ({ x: +e.getAttribute('cx'), y: +e.getAttribute('cy') }));
+  if (!REDUCE) {
+    addEventListener('pointermove', ev => {
+      const svg = $('.bot'); if (!svg) return;
+      const r = svg.getBoundingClientRect();
+      const dx = Math.max(-1, Math.min(1, (ev.clientX - (r.left + r.width / 2)) / (r.width * .9)));
+      const dy = Math.max(-1, Math.min(1, (ev.clientY - (r.top + r.height * .35)) / (r.height * .9)));
+      eyes.forEach((e, i) => { e.setAttribute('cx', home[i].x + dx * 5); e.setAttribute('cy', home[i].y + dy * 4); });
+    }, { passive: true });
+    setInterval(() => { // blink
+      lid.animate([{ height: 0 }, { height: 62 }, { height: 0 }], { duration: 260, easing: 'ease-in-out' });
+    }, 4800);
+    setInterval(() => { // hammer tap
+      arm.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }],
+        { duration: 520, easing: 'ease-in-out' });
+      bulb.animate([{ fill: '#FFD831' }, { fill: '#FF5A45' }, { fill: '#FFD831' }], { duration: 520 });
+    }, 6200);
+  }
+  arm.style.transformOrigin = '272px 172px';
+})();
+
+/* ---------- fireworks ---------- */
+const fx = $('#fx'), ctx = fx.getContext('2d');
+let parts = [], raf = null;
+function sizeFx() { fx.width = innerWidth * devicePixelRatio; fx.height = innerHeight * devicePixelRatio; ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); }
+sizeFx(); addEventListener('resize', sizeFx);
+const FXC = ['#FFD831', '#3A5BFF', '#0FC6A4', '#FF5A45', '#0C0E1A'];
+function burst(x, y, n = 46) {
+  if (REDUCE) return;
+  for (let i = 0; i < n; i++) {
+    const a = (Math.PI * 2 * i) / n + Math.random() * .3, s = 2.6 + Math.random() * 5.4;
+    parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 2, life: 1, c: FXC[(Math.random() * FXC.length) | 0], r: 2 + Math.random() * 3.4 });
+  }
+  if (!raf) raf = requestAnimationFrame(tickFx);
+}
+function tickFx() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  parts = parts.filter(p => p.life > 0);
+  parts.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.vy += .16; p.vx *= .99; p.life -= .016;
+    ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.c;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+  raf = parts.length ? requestAnimationFrame(tickFx) : null;
+}
+$$('[data-fx]').forEach(el => el.addEventListener('pointerenter', () => {
+  const r = el.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, 16);
+}));
+
+/* ---------- chat thread ---------- */
+const script = [
+  { w: 'them', who: 'CMO, consumer brand', t: "We've had a membership concept ready since January. Every quarter it slips." },
+  { w: 'us', who: 'ATXFORGE', t: "What's actually blocking it? Money, people, or nobody owning it?" },
+  { w: 'them', who: 'CMO', t: "Honestly? All three. Dev is booked on the platform migration. My team can run it, we just can't build it." },
+  { w: 'us', who: 'ATXFORGE', t: "Then you don't need a strategy deck. You need the offer nailed down and someone to build the thing and put it in front of your list." },
+  { w: 'them', who: 'CMO', t: "That's exactly it. And I don't want to hire four people for something we haven't proven yet." },
+  { w: 'us', who: 'ATXFORGE', t: "So don't. Run it as one scoped build with us. If it works, we keep going. If it doesn't, you found out cheap and fast." }
+];
+let ci = 0;
+const thread = $('#thread');
+function step() {
+  if (ci >= script.length) { $('#chatNext').innerHTML = "That's the whole pitch <span class=\"arr\">→</span>"; return; }
+  const m = script[ci++];
+  const d = document.createElement('div');
+  d.className = 'bub ' + m.w;
+  d.innerHTML = `<span class="who">${m.who}</span>${m.t}`;
+  thread.append(d);
+  if (ci >= script.length) $('#chatNext').innerHTML = "That's the whole pitch <span class=\"arr\">→</span>";
+}
+$('#chatNext').onclick = step;
+$('#chatReset').onclick = () => { thread.innerHTML = ''; ci = 0; $('#chatNext').innerHTML = 'Keep going <span class="arr">→</span>'; step(); step(); };
+step(); step();
+
+/* ---------- roles ---------- */
+const roles = {
+  'Founder / CEO': {
+    q: "I have more ideas worth building than people I trust to build them.",
+    b: "You don't want to spend six months recruiting a team for something that might not work. You want a co-builder who thinks like an owner, tells you when an idea is weak, and moves fast when it's strong.",
+    l: ["Idea to offer to launched product, one team the whole way", "Straight go / no-go calls before you spend real money", "Go-to-market, copy and funnels that actually convert", "The option to partner on fees plus equity"],
+    f: "Most founders start with a <strong>Launch Sprint</strong>, then talk about a longer partnership."
+  },
+  'CTO': {
+    q: "My roadmap is full. Every new idea means something good gets bumped.",
+    b: "You're protecting a core platform and a team that's already at capacity. We take the net-new work: the prototype, the side product, the AI workflow, the internal tool, without touching your critical path or your standards.",
+    l: ["Net-new builds that stay off your roadmap", "We work to your stack, review process and security bar", "Prototypes proven before they earn a place in the platform", "Clean handover, documented, or we keep running it"],
+    f: "Usually a <strong>Launch Sprint</strong> on one build, scoped with you before we start."
+  },
+  'COO': {
+    q: "We keep duct-taping a process that should have been a real system a year ago.",
+    b: "Operators see the leverage first: the tool that saves the team forty hours a week, the portal customers keep asking for, the workflow that breaks every time you scale. We build those and get them adopted.",
+    l: ["Internal tools, dashboards and automations people use", "AI-assisted workflows that remove the repetitive parts", "Customer portals and self-serve experiences", "Rollout and training, not just a repo handoff"],
+    f: "Usually a <strong>Launch Sprint</strong> on whichever process hurts most."
+  },
+  'CMO': {
+    q: "The strategy is clear. I don't have the bandwidth to test half of it.",
+    b: "You don't need another deck. You need a senior crew that turns a strategic bet into a live test with real numbers, without adding headcount or pulling your team off the core business.",
+    l: ["New offers, channels and brand extensions built end to end", "Senior strategy and hands-on execution from the same people", "Proof before you commit real budget", "A standing partner working the roadmap quarter after quarter"],
+    f: "Usually an <strong>Embedded Partner</strong> retainer against your top few bets."
+  },
+  'Marketing lead': {
+    q: "I've got a campaign idea a week and a dev queue booked through next quarter.",
+    b: "You're closest to the customer, so you spot the opportunities first, and you're also first to hear “not this sprint.” We give you a build team that isn't sitting in someone else's backlog.",
+    l: ["Landing pages, funnels and microsites shipped in days", "Copy and creative that make your numbers look good upstairs", "Tracking set up so the wins are provable", "We work inside your brand guidelines, not around them"],
+    f: "Usually a <strong>Launch Sprint</strong> on the campaign you've been sitting on."
+  }
+};
+const rTabs = $('#roleTabs');
+Object.keys(roles).forEach((k, i) => {
+  const b = document.createElement('button');
+  b.className = 'rt'; b.type = 'button'; b.id = 'role-' + i;
+  b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === 0); b.setAttribute('aria-controls', 'rolePanel');
+  b.textContent = k; b.onclick = () => setRole(k);
+  rTabs.append(b);
+});
+function setRole(k) {
+  const r = roles[k];
+  $$('.rt', rTabs).forEach(t => t.setAttribute('aria-selected', t.textContent === k));
+  $('#rq').textContent = r.q; $('#rb').textContent = r.b;
+  $('#rl').innerHTML = r.l.map(x => `<li>${x}</li>`).join('');
+  $('#rf').innerHTML = r.f;
+  const card = $('#rolePanel');
+  if (!REDUCE) card.animate([{ opacity: .4, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.2,1)' });
+}
+setRole('Founder / CEO');
+
+/* ---------- idea board ---------- */
+const ideas = {
+  "A membership or subscription tier": ["Price it, name it, decide what's behind the wall", "Build the signup, billing and member area", "Launch offer to your existing list first", "Watch churn weekly, tune the tier"],
+  "An AI workflow for the team": ["Find the 3 tasks worth automating", "Build it against your real data", "Roll it out to one team, train them", "Measure hours saved, expand"],
+  "A new product line": ["Test demand before you manufacture anything", "Build the store, the pages, the checkout", "Launch to warm audience, then paid", "Scale winners, cut the rest"],
+  "A rebuilt funnel before Q4 spend": ["Find where buyers drop off and why", "Rewrite the offer and rebuild the pages", "Ship it and split-test the big lever", "Roll the winner into paid"],
+  "The internal tool everyone asks for": ["Shadow the workflow, measure the pain", "Build it with the team clicking weekly", "Roll out, train, kill the spreadsheet", "Automate the next step over"]
+};
+const picks = $('#ideaPicks');
+let current = Object.keys(ideas)[0];
+Object.keys(ideas).forEach((k, i) => {
+  const b = document.createElement('button');
+  b.className = 'ip'; b.type = 'button'; b.id = 'idea-' + i;
+  b.setAttribute('aria-pressed', i === 0); b.textContent = k;
+  b.onclick = () => { current = k; $$('.ip', picks).forEach(p => p.setAttribute('aria-pressed', p.textContent === k)); resetTrack(); };
+  picks.append(b);
+});
+function resetTrack() {
+  $$('.stage').forEach(s => s.classList.remove('live', 'done'));
+  $('#runOut').innerHTML = 'Ready: <strong>' + current + '</strong>. Press <strong>Run it through</strong>.';
+}
+let running = false;
+$('#runBtn').onclick = () => {
+  if (running) return;
+  running = true; resetTrack();
+  const steps = ideas[current], stages = $$('.stage');
+  let i = 0;
+  const advance = () => {
+    if (i > 0) { stages[i - 1].classList.remove('live'); stages[i - 1].classList.add('done'); }
+    if (i >= stages.length) {
+      running = false;
+      $('#runOut').innerHTML = '<strong>Live.</strong> Then we start on the next thing on your list.';
+      const r = $('#track').getBoundingClientRect();
+      burst(r.left + r.width / 2, r.top + r.height / 2, 60);
+      return;
+    }
+    const st = stages[i];
+    st.classList.add('live');
+    $('#p' + i).textContent = steps[i];
+    $('#runOut').innerHTML = '<strong>' + current + '</strong> → ' + ['Shape', 'Build', 'Launch', 'Grow'][i];
+    if (!REDUCE) st.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px)' }, { transform: 'translateY(0)' }], { duration: 420, easing: 'ease-out' });
+    i++;
+    setTimeout(advance, REDUCE ? 200 : 1150);
+  };
+  advance();
+};
+resetTrack();
+
+/* ---------- verticals marquee ---------- */
+const verticals = ["DTC & CPG", "SaaS", "Fintech", "Health & wellness", "Creator brands", "Marketplaces", "Education", "Food & beverage", "Beauty", "Memberships", "Professional services", "Real estate", "Hospitality", "Events", "AI products", "Internal tools", "Trading & finance", "Investing education", "Crowdfunding", "Sports & outdoor", "Nonprofit", "Local services", "Media & content", "Ecommerce subscriptions", "B2B services", "Mobile apps"];
+const half = Math.ceil(verticals.length / 2);
+const fill = (el, arr) => { el.innerHTML = [...arr, ...arr].map(v => `<span class="vtag">${v}</span>`).join(''); };
+fill($('#mq1'), verticals.slice(0, half));
+fill($('#mq2'), verticals.slice(half));
+
+/* ---------- team ---------- */
+const team = [
+  { n: "Peter Hewlett", i: "PH", c: "var(--pop)", r: "Growth & launches", f: "Operator-builder who works where offers, creative and conversion meet.", b: "Peter turns loose concepts into launches: the offer, the funnel, the creative and the numbers behind them. He's the one asking whether anyone will actually buy this before we build it." },
+  { n: "Wilson Smith", i: "WS", c: "var(--lav)", r: "Strategy & build", f: "Builder and strategist who keeps things clear when everything is urgent.", b: "Wilson sets the scope, sequences the work and makes sure the right thing ships first. If a plan survives contact with reality, it's usually because he pressure-tested it early." },
+  { n: "Itay Bengal", i: "IB", c: "rgba(15,198,164,.35)", r: "Monetization & copy", f: "Monetization specialist with 13+ years of direct-response copywriting.", b: "Itay finds where the revenue is leaking and writes what makes it convert: positioning, offers, pages, emails and webinars. Most of his work has been in fintech, SaaS, investing and high-ticket offers." },
+  { n: "Matthew Bergvinson", i: "MB", c: "rgba(255,90,69,.3)", r: "Engineering & systems", f: "Engineer who builds systems meant to hold up under real load.", b: "Matthew takes what we design and makes it real, fast and maintainable, with the kind of discipline that comes from building software where downtime isn't an option." }
+];
+$('#team').innerHTML = team.map((m, i) => `
+  <button class="flip" type="button" aria-pressed="false" id="flip-${i}">
+    <div class="flip-in">
+      <div class="face front">
+        <span class="avatar" style="background:${m.c}">${m.i}</span>
+        <div><span class="role">${m.r}</span><h3 style="margin-top:4px">${m.n}</h3></div>
+        <p>${m.f}</p>
+        <span class="flipnote">Tap to flip →</span>
+      </div>
+      <div class="face back">
+        <h3 style="color:var(--pop)">${m.n}</h3>
+        <p>${m.b}</p>
+        <span class="flipnote">Tap to flip back</span>
+      </div>
+    </div>
+  </button>`).join('');
+$$('.flip').forEach(f => f.onclick = () => f.setAttribute('aria-pressed', f.getAttribute('aria-pressed') !== 'true'));
+// equalize flip card heights so the absolutely-positioned back face never clips
+requestAnimationFrame(() => {
+  const backs = $$('.face.back');
+  $$('.flip').forEach((f, i) => {
+    const h = Math.max(f.querySelector('.front').scrollHeight, backs[i].scrollHeight);
+    f.querySelector('.flip-in').style.minHeight = h + 'px';
+  });
+});
+
+/* ---------- fit check ---------- */
+const qsData = [
+  "You have more ideas worth building than people to build them.",
+  "At least one of them has a real window. Waiting costs you something.",
+  "You'd rather have a long-term partner than manage another vendor.",
+  "You can make the call yourself, or get to the person who can.",
+  "You want a team that will tell you when an idea isn't worth it."
+];
+const answers = Array(qsData.length).fill(null);
+$('#qs').innerHTML = qsData.map((q, i) => `
+  <div class="qrow"><p>${q}</p>
+  <div class="yn" role="group" aria-label="Answer"><button type="button" id="q${i}y" aria-pressed="false">Yes</button><button type="button" id="q${i}n" aria-pressed="false">Not really</button></div></div>`).join('');
+qsData.forEach((_, i) => {
+  const y = $('#q' + i + 'y'), n = $('#q' + i + 'n');
+  y.onclick = () => { answers[i] = 1; y.setAttribute('aria-pressed', 'true'); n.setAttribute('aria-pressed', 'false'); score(y); };
+  n.onclick = () => { answers[i] = 0; n.setAttribute('aria-pressed', 'true'); y.setAttribute('aria-pressed', 'false'); score(n); };
+});
+let celebrated = false;
+function score(src) {
+  const done = answers.filter(a => a !== null).length, yes = answers.filter(a => a === 1).length;
+  $$('#meter i').forEach((b, i) => {
+    b.style.background = i < yes ? ['#FF5A45', '#FFD831', '#FFD831', '#0FC6A4', '#0FC6A4'][yes - 1] : 'rgba(255,255,255,.14)';
+    b.style.transform = i < yes ? 'translateY(-3px)' : 'none';
+  });
+  let t, b;
+  if (done < qsData.length) { t = `${yes} yes so far, ${qsData.length - done} to go.`; b = "Keep going. This takes about as long as reading a subject line."; }
+  else if (yes >= 4) {
+    t = "That's a strong fit.";
+    b = "You're exactly who we built this for. Send us the idea that's been waiting the longest and we'll tell you where we'd start.";
+    if (!celebrated) { celebrated = true; const r = src.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 70); }
+  }
+  else if (yes >= 2) { t = "Probably a fit."; b = "There's something here. Thirty minutes will tell us both whether a sprint or a standing partnership makes more sense."; }
+  else { t = "Maybe not right now."; b = "Honest answer: we might not be the right partner today. Keep us bookmarked for when the list outgrows the team."; }
+  $('#fitTitle').textContent = t; $('#fitBody').textContent = b;
+}
+
+/* ---------- form ---------- */
+$('#brief').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target, name = f.name.value.trim(), email = f.email.value.trim(), note = $('#formnote');
+  if (!name || !/^\S+@\S+\.\S+$/.test(email)) {
+    note.textContent = 'Add your name and a valid email so we can write back.';
+    note.style.color = 'var(--coral)';
+    if (!REDUCE) f.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(0)' }], { duration: 300 });
+    return;
+  }
+  const body = `Name: ${name}\nEmail: ${email}\nSeat: ${f.role.value}\nCompany/project: ${f.company.value}\nLeaning toward: ${f.model.value}\n\nWhat's stuck:\n${f.stuck.value}`;
+  location.href = `mailto:hello@atxforge.com?subject=${encodeURIComponent('Partnership: ' + (f.company.value || name))}&body=${encodeURIComponent(body)}`;
+  note.style.color = ''; note.textContent = 'Your email app should be opening. If it doesn’t, write to hello@atxforge.com.';
+  const r = f.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + 60, 80);
+});
+</script>
+
+</body>
+</html>

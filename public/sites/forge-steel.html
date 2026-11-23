@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ATXFORGE</title>
+<meta name="description" content="ATXFORGE is a four-partner build and go-to-market collective. Long-term partners for CMOs, COOs, CEOs and founders with more ideas than hands.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:ital,wght@0,400..700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* ---------- Tokens: tempered steel ---------- */
+:root{
+  --ground:#E6E9EC;      /* mill scale grey */
+  --ground-2:#DCE0E4;
+  --panel:#F4F6F7;
+  --ink:#121518;
+  --ink-2:#3B424A;
+  --ink-3:#6A737C;
+  --rule:#C3C9CF;
+  --rule-2:#D3D8DC;
+  --accent:#2448B8;      /* temper blue, ~600°F */
+  --accent-ink:#FFFFFF;
+  --accent-soft:#D5DCF3;
+  --straw:#C9962E;       /* temper straw, ~430°F */
+  --bronze:#9C5B2A;
+  --violet:#5B3C98;
+  --heat:#D2451E;        /* forging heat */
+  --good:#2E7D4F;
+  --shadow:0 1px 0 rgba(18,21,24,.04),0 12px 32px -18px rgba(18,21,24,.28);
+  --display:"Bricolage Grotesque","Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Hanken Grotesk","Helvetica Neue",Arial,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --r:6px;
+  --max:1180px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#101317;--ground-2:#161A1F;--panel:#1B2026;
+    --ink:#E9ECEF;--ink-2:#B6BEC6;--ink-3:#838C95;
+    --rule:#2C333A;--rule-2:#232930;
+    --accent:#7F9CF5;--accent-ink:#0B0E12;--accent-soft:#1F2A4A;
+    --straw:#E2B454;--bronze:#D08A55;--violet:#A58BE0;--heat:#F2703F;--good:#5CC08A;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 16px 40px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101317;--ground-2:#161A1F;--panel:#1B2026;
+  --ink:#E9ECEF;--ink-2:#B6BEC6;--ink-3:#838C95;
+  --rule:#2C333A;--rule-2:#232930;
+  --accent:#7F9CF5;--accent-ink:#0B0E12;--accent-soft:#1F2A4A;
+  --straw:#E2B454;--bronze:#D08A55;--violet:#A58BE0;--heat:#F2703F;--good:#5CC08A;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 16px 40px -20px rgba(0,0,0,.7);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;letter-spacing:-.02em;line-height:1.02;margin:0;text-wrap:balance}
+p{margin:0}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:clamp(18px,1.6vw,21px);color:var(--ink-2);max-width:60ch;line-height:1.55}
+.muted{color:var(--ink-3)}
+button{font:inherit;color:inherit}
+
+/* ---------- Heat bar (scroll progress cools as you read) ---------- */
+.heatbar{position:fixed;left:0;right:0;top:0;height:3px;z-index:60;pointer-events:none}
+.heatbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--heat),var(--straw) 35%,var(--bronze) 55%,var(--violet) 75%,var(--accent))}
+
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--ground) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule-2)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;letter-spacing:.04em;font-size:17px}
+.logo svg{width:26px;height:26px;flex:none}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{text-decoration:none;font-size:14.5px;color:var(--ink-2)}
+.nav ul a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;text-decoration:none;font-weight:600;font-size:15.5px;padding:13px 20px;border-radius:var(--r);background:var(--ink);color:var(--ground);transition:transform .15s ease,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn .arr{transition:transform .2s}
+.btn:hover .arr{transform:translateX(3px)}
+.btn.blue{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--rule)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn.sm{padding:9px 14px;font-size:14px}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:var(--r);padding:8px 10px;cursor:pointer}
+@media (max-width:960px){
+  .nav ul{display:none}
+  .nav .btn.sm{margin-left:auto}
+}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:clamp(48px,8vw,104px) clamp(40px,6vw,72px);position:relative}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:clamp(32px,5vw,72px);align-items:end}
+.hero h1{font-size:clamp(46px,7.4vw,104px);font-weight:760;letter-spacing:-.035em;line-height:.94;margin-top:22px}
+.hero h1 .cool{background:linear-gradient(90deg,var(--heat),var(--straw),var(--bronze),var(--violet),var(--accent),var(--accent));background-size:500% 100%;background-position:0 0;-webkit-background-clip:text;background-clip:text;color:transparent;animation:temper 3.2s cubic-bezier(.3,.1,.2,1) .4s forwards}
+@keyframes temper{to{background-position:100% 0}}
+.hero .lede{margin-top:28px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hero-note{margin-top:16px;font-size:14px;color:var(--ink-3)}
+
+.backlog{background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+.backlog header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--rule-2)}
+.backlog ol{list-style:none;margin:0;padding:6px 0}
+.backlog li{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:12px 18px;border-bottom:1px dashed var(--rule-2)}
+.backlog li:last-child{border-bottom:0}
+.backlog .idea{font-weight:600;font-size:15.5px;line-height:1.35}
+.backlog .since{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);grid-column:1}
+.backlog .temp{grid-row:1/3;grid-column:2;align-self:center;font-family:var(--mono);font-size:12px;padding:4px 8px;border-radius:4px;white-space:nowrap}
+.t-hot{background:color-mix(in srgb,var(--heat) 16%,transparent);color:var(--heat)}
+.t-straw{background:color-mix(in srgb,var(--straw) 20%,transparent);color:color-mix(in srgb,var(--straw) 70%,var(--ink))}
+.t-violet{background:color-mix(in srgb,var(--violet) 16%,transparent);color:var(--violet)}
+.t-cold{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.backlog footer{padding:12px 18px;font-size:13.5px;color:var(--ink-2);background:var(--ground-2);border-top:1px solid var(--rule-2)}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(48px,7vw,80px);border-top:1px solid var(--ink)}
+.stat{padding:18px 18px 0 0;border-right:1px solid var(--rule)}
+.stat + .stat{padding-left:18px}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:var(--display);font-size:clamp(34px,4.4vw,56px);font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:8px;font-size:14px;color:var(--ink-2);line-height:1.4}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat{border-right:0;padding:18px 0!important;border-bottom:1px solid var(--rule)}
+  .stat:nth-child(odd){padding-right:14px!important}
+}
+
+/* ---------- Section scaffolding ---------- */
+section.block{padding-block:clamp(72px,10vw,128px);border-top:1px solid var(--rule)}
+.sec-head{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px 48px;margin-bottom:clamp(36px,5vw,56px)}
+.sec-head h2{font-size:clamp(36px,5vw,64px)}
+.sec-head .lede{margin-top:18px}
+@media (max-width:760px){.sec-head{grid-template-columns:1fr}}
+
+/* ---------- Cooling tool ---------- */
+.cool-tool{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:0;background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+.cool-left{padding:clamp(22px,3vw,36px);border-right:1px solid var(--rule-2);display:flex;flex-direction:column;gap:22px}
+.cool-right{padding:clamp(22px,3vw,36px);display:flex;flex-direction:column;gap:18px;background:var(--ground-2)}
+.ingot{height:108px;border-radius:6px;position:relative;overflow:hidden;transition:background .35s ease;box-shadow:inset 0 -18px 30px -12px rgba(0,0,0,.25)}
+.ingot::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(100deg,rgba(255,255,255,.06) 0 2px,transparent 2px 9px)}
+.ingot-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ingot-meta b{font-family:var(--display);font-size:clamp(30px,3.6vw,44px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ingot-meta .state{font-family:var(--mono);font-size:13px;color:var(--ink-2)}
+.range-row label{display:flex;justify-content:space-between;font-weight:600;margin-bottom:10px}
+.range-row output{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--heat),var(--straw),var(--bronze),var(--violet),var(--accent))}
+input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--heat),var(--straw),var(--bronze),var(--violet),var(--accent))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9px;border-radius:50%;background:var(--panel);border:2px solid var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--panel);border:2px solid var(--ink)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.meter{display:grid;gap:8px}
+.meter-top{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.meter-top span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.meter-bar{height:8px;border-radius:4px;background:var(--rule-2);overflow:hidden}
+.meter-bar i{display:block;height:100%;border-radius:4px;transition:width .35s ease}
+.verdict{font-size:16px;line-height:1.5;padding:16px;border-radius:6px;background:var(--panel);border:1px solid var(--rule-2);min-height:5.2em}
+.fine{font-size:12.5px;color:var(--ink-3);line-height:1.45}
+@media (max-width:860px){.cool-tool{grid-template-columns:1fr}.cool-left{border-right:0;border-bottom:1px solid var(--rule-2)}}
+
+.threats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px);margin-top:clamp(40px,5vw,64px)}
+.threat{padding-top:18px;border-top:2px solid var(--ink)}
+.threat h3{font-size:26px;margin-bottom:10px}
+.threat p{color:var(--ink-2)}
+@media (max-width:760px){.threats{grid-template-columns:1fr}}
+
+/* ---------- Roles ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.tab{background:transparent;border:1.5px solid var(--rule);border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink-2);transition:all .15s}
+.tab:hover{border-color:var(--ink);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+.role-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.role-quote{font-family:var(--display);font-size:clamp(28px,3.4vw,44px);font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.role-quote::before{content:"“";color:var(--accent)}
+.role-quote::after{content:"”";color:var(--accent)}
+.role-body{margin-top:20px;color:var(--ink-2);max-width:56ch}
+.plate{background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;padding:24px}
+.plate h4{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.checks li{display:grid;grid-template-columns:20px 1fr;gap:12px;line-height:1.45}
+.checks li::before{content:"";width:14px;height:14px;margin-top:5px;border-radius:3px;background:var(--accent);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 7.5l3 3 7-7' fill='none' stroke='%23000' stroke-width='2.2'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 7.5l3 3 7-7' fill='none' stroke='%23000' stroke-width='2.2'/%3E%3C/svg%3E") center/contain no-repeat}
+.plate .result{margin-top:20px;padding-top:16px;border-top:1px solid var(--rule-2);font-size:15px}
+.plate .result b{color:var(--accent)}
+@media (max-width:860px){.role-panel{grid-template-columns:1fr}}
+
+/* ---------- Lanes ---------- */
+.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+.lane{padding:24px 22px 28px 0;display:flex;flex-direction:column;gap:12px}
+.lane + .lane{padding-left:22px;border-left:1px solid var(--rule)}
+.lane .label{color:var(--accent)}
+.lane h3{font-size:30px}
+.lane p{color:var(--ink-2);font-size:16px}
+.lane ul{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:6px;font-size:14.5px;color:var(--ink-2)}
+.lane ul li{padding-left:16px;position:relative}
+.lane ul li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:1.5px;background:var(--ink-3)}
+@media (max-width:980px){.lanes{grid-template-columns:repeat(2,minmax(0,1fr))}.lane:nth-child(3){padding-left:0;border-left:0}.lane:nth-child(n+3){border-top:1px solid var(--rule)}}
+@media (max-width:560px){.lanes{grid-template-columns:1fr}.lane,.lane + .lane{padding-left:0;border-left:0}.lane + .lane{border-top:1px solid var(--rule)}}
+
+/* ---------- Triage ---------- */
+.triage{margin-top:clamp(48px,6vw,80px);display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,4vw,56px);align-items:start}
+.triage h3{font-size:clamp(28px,3.2vw,40px);margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{border:1.5px solid var(--rule);background:var(--panel);border-radius:6px;padding:10px 14px;cursor:pointer;font-size:15px;font-weight:500;text-align:left;transition:all .15s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.plan{background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+.plan header{padding:18px 22px;border-bottom:1px solid var(--rule-2);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.plan header b{font-family:var(--display);font-size:24px;letter-spacing:-.01em}
+.plan .weeks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.plan .wk{padding:18px 22px;border-right:1px solid var(--rule-2)}
+.plan .wk:last-child{border-right:0}
+.plan .wk .label{display:block;margin-bottom:8px}
+.plan .wk p{font-size:15px;line-height:1.45}
+.plan footer{padding:14px 22px;background:var(--ground-2);border-top:1px solid var(--rule-2);font-size:14.5px;color:var(--ink-2)}
+@media (max-width:860px){.triage{grid-template-columns:1fr}}
+@media (max-width:560px){.plan .weeks{grid-template-columns:1fr}.plan .wk{border-right:0;border-bottom:1px solid var(--rule-2)}}
+
+/* ---------- Compare ---------- */
+.seg{display:inline-flex;padding:4px;border-radius:8px;background:var(--ground-2);border:1px solid var(--rule-2);flex-wrap:wrap;gap:2px;margin-bottom:28px}
+.seg button{border:0;background:transparent;padding:9px 16px;border-radius:5px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink-2)}
+.seg button[aria-selected="true"]{background:var(--panel);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,40px)}
+.col{border-radius:10px;padding:clamp(20px,2.6vw,30px);border:1px solid var(--rule-2);background:var(--panel)}
+.col.us{border:1.5px solid var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--panel))}
+.col h3{font-size:26px;margin:6px 0 18px}
+.rows{display:grid;gap:0}
+.rows div{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;padding:12px 0;border-top:1px solid var(--rule-2);font-size:15.5px;line-height:1.4}
+.rows dt{color:var(--ink-3);font-size:14px}
+.rows dd{margin:0;font-weight:500}
+.timeline{margin-top:22px}
+.tl-bar{height:10px;border-radius:5px;background:var(--rule-2);position:relative;overflow:hidden;margin-top:8px}
+.tl-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:5px;transition:width .5s ease}
+.col .tl-bar i{background:var(--ink-3)}
+.col.us .tl-bar i{background:var(--accent)}
+@media (max-width:760px){.compare{grid-template-columns:1fr}}
+
+/* ---------- Process ---------- */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;position:relative}
+.step{background:none;border:0;text-align:left;cursor:pointer;padding:20px 16px 20px 0;border-top:3px solid var(--rule);transition:border-color .2s}
+.step .label{display:block}
+.step b{display:block;font-family:var(--display);font-size:clamp(22px,2.4vw,30px);font-weight:700;letter-spacing:-.02em;margin-top:6px;color:var(--ink-3);transition:color .2s}
+.step[aria-selected="true"]{border-top-color:var(--accent)}
+.step[aria-selected="true"] b{color:var(--ink)}
+.step:hover b{color:var(--ink)}
+.step-detail{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);margin-top:28px;padding:clamp(22px,3vw,36px);background:var(--panel);border:1px solid var(--rule-2);border-radius:10px}
+.step-detail h3{font-size:clamp(26px,3vw,38px);margin-bottom:14px}
+.step-detail p{color:var(--ink-2)}
+@media (max-width:860px){.steps{grid-template-columns:repeat(5,minmax(120px,1fr));overflow-x:auto;scrollbar-width:none}.step-detail{grid-template-columns:1fr}}
+.steps-scroll{overflow-x:auto}
+
+/* ---------- Verticals ---------- */
+.v-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.v-cloud{display:flex;flex-wrap:wrap;gap:10px 10px}
+.v{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.3vw,30px);letter-spacing:-.015em;padding:6px 14px;border-radius:6px;border:1px solid var(--rule);background:var(--panel);transition:opacity .25s,background .25s,color .25s,border-color .25s}
+.v.dim{opacity:.22}
+.v.on{border-color:var(--ink);background:var(--ink);color:var(--ground)}
+.v-foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:32px;padding-top:20px;border-top:1px solid var(--rule)}
+.v-foot p{max-width:62ch;color:var(--ink-2)}
+
+/* ---------- Team ---------- */
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+.member{display:flex;flex-direction:column;gap:14px}
+.portrait{aspect-ratio:4/5;max-width:100%;border-radius:8px;background:var(--ground-2);border:1px solid var(--rule-2);position:relative;overflow:hidden;display:grid;place-items:center}
+.portrait span{font-family:var(--display);font-weight:800;font-size:clamp(48px,6vw,84px);letter-spacing:-.04em;color:var(--rule)}
+.portrait::after{content:"Photo coming";position:absolute;left:12px;bottom:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.member h3{font-size:24px}
+.member .lane-tag{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.04em}
+.member p{font-size:15px;color:var(--ink-2);line-height:1.5}
+@media (max-width:900px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.team{grid-template-columns:1fr}}
+.disciplines{margin-top:clamp(36px,5vw,56px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--rule-2);border-radius:10px;overflow:hidden;background:var(--panel)}
+.disc{padding:22px}
+.disc + .disc{border-left:1px solid var(--rule-2)}
+.disc b{display:block;font-family:var(--display);font-size:clamp(30px,3.4vw,42px);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.disc span{display:block;margin-top:8px;font-size:14.5px;color:var(--ink-2)}
+@media (max-width:700px){.disciplines{grid-template-columns:1fr}.disc + .disc{border-left:0;border-top:1px solid var(--rule-2)}}
+
+/* ---------- Models ---------- */
+.models{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+.model{padding:clamp(22px,2.6vw,30px);border-radius:10px;border:1px solid var(--rule-2);background:var(--panel);display:flex;flex-direction:column;gap:14px}
+.model.feat{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.model.feat .label,.model.feat p,.model.feat li{color:color-mix(in srgb,var(--ground) 72%,var(--ink))}
+.model h3{font-size:30px}
+.model p{color:var(--ink-2);font-size:16px}
+.model ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:15px;color:var(--ink-2)}
+.model ul li{padding-left:18px;position:relative}
+.model ul li::before{content:"→";position:absolute;left:0;color:var(--accent)}
+.model.feat ul li::before{color:var(--straw)}
+.model .best{margin-top:auto;padding-top:14px;border-top:1px solid var(--rule-2);font-size:14px}
+.model.feat .best{border-top-color:color-mix(in srgb,var(--ground) 20%,transparent)}
+@media (max-width:900px){.models{grid-template-columns:1fr}}
+
+/* ---------- Fit check ---------- */
+.fit{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(24px,4vw,56px);align-items:start}
+.qs{display:grid;gap:0;border-top:1px solid var(--ink)}
+.q{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule)}
+.q p{font-size:17px;line-height:1.4}
+.yn{display:inline-flex;border:1.5px solid var(--rule);border-radius:6px;overflow:hidden}
+.yn button{border:0;background:transparent;padding:8px 14px;cursor:pointer;font-weight:600;font-size:14px;color:var(--ink-2)}
+.yn button + button{border-left:1.5px solid var(--rule)}
+.yn button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.score{position:sticky;top:96px;background:var(--panel);border:1px solid var(--rule-2);border-radius:10px;padding:26px;box-shadow:var(--shadow)}
+.gauge{display:flex;gap:4px;margin:14px 0 18px}
+.gauge i{flex:1;height:34px;border-radius:3px;background:var(--rule-2);transition:background .25s}
+.score h3{font-size:30px;margin-bottom:10px}
+.score p{color:var(--ink-2);font-size:15.5px;margin-bottom:18px}
+@media (max-width:860px){.fit{grid-template-columns:1fr}.score{position:static}}
+
+/* ---------- FAQ ---------- */
+.faq{border-top:1px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr 28px;gap:16px;padding:22px 0;font-family:var(--display);font-weight:600;font-size:clamp(20px,2.2vw,26px);letter-spacing:-.015em;line-height:1.2}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);font-weight:400;font-size:24px;text-align:right;color:var(--ink-3);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg);color:var(--accent)}
+.faq .a{padding:0 0 24px;max-width:70ch;color:var(--ink-2)}
+.faq-grid{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px 48px}
+@media (max-width:760px){.faq-grid{grid-template-columns:1fr}}
+
+/* ---------- Final CTA ---------- */
+.final{background:var(--ink);color:var(--ground);padding-block:clamp(72px,10vw,128px)}
+.final .label{color:color-mix(in srgb,var(--ground) 60%,var(--ink))}
+.final-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start}
+.final h2{font-size:clamp(42px,6vw,84px);letter-spacing:-.035em;line-height:.96;margin-top:18px}
+.final .lede{color:color-mix(in srgb,var(--ground) 75%,var(--ink));margin-top:24px}
+.final ul{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:10px;color:color-mix(in srgb,var(--ground) 82%,var(--ink))}
+.final ul li{display:grid;grid-template-columns:22px 1fr;gap:10px}
+.final ul li::before{content:"✓";color:var(--straw);font-weight:700}
+form.brief{background:var(--ground);color:var(--ink);border-radius:10px;padding:clamp(20px,3vw,32px);display:grid;gap:14px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:grid;gap:6px}
+.field label{font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.field input,.field select,.field textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--panel);border:1.5px solid var(--rule);border-radius:6px;padding:11px 12px;width:100%}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+form.brief .btn{justify-content:center}
+.form-note{font-size:13px;color:var(--ink-3);text-align:center}
+@media (max-width:860px){.final-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.f2{grid-template-columns:1fr}}
+
+footer.site{background:var(--ink);color:color-mix(in srgb,var(--ground) 65%,var(--ink));border-top:1px solid color-mix(in srgb,var(--ground) 14%,var(--ink));padding-block:28px;font-size:14px}
+footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer.site a{text-decoration:none}
+footer.site a:hover{color:var(--ground)}
+footer.site nav{display:flex;gap:18px;flex-wrap:wrap}
+
+/* reveal: visible at rest, gentle lift when JS runs */
+.js .rise{transform:translateY(14px);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .rise.in{transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .hero h1 .cool{background-position:100% 0}
+  .js .rise{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="heatbar" aria-hidden="true"><i id="heat"></i></div>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="ATXFORGE home">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="4" style="fill:var(--ink)"/><path d="M6 17h14l-2.5 3.5h-9z" style="fill:var(--ground)"/><path d="M8 9h11v2.2c0 1.8-1.4 3.3-3.2 3.3H10.4L8 12z" style="fill:var(--straw)"/><path d="M13.5 4.5l1 2.2M17.5 5l-.4 2.2M10 5.3l1.2 1.8" style="stroke:var(--heat);fill:none" stroke-width="1.4" stroke-linecap="round"/></svg>
+      ATXFORGE
+    </a>
+    <ul>
+      <li><a href="#why-now">Why now</a></li>
+      <li><a href="#who">Who it's for</a></li>
+      <li><a href="#build">What we build</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn sm" href="#start">Start a partnership <span class="arr">→</span></a>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<header class="hero wrap">
+  <div class="hero-grid">
+    <div class="rise">
+      <span class="label">Build &amp; go-to-market collective · Austin, TX</span>
+      <h1>Your best idea is <span class="cool">cooling</span> on the anvil.</h1>
+      <p class="lede">You don't have an idea problem. You have a hands problem. ATXFORGE is four senior operators with 15 years and 30+ industries behind us. We plug in as your build team, your launch team and your second brain, so the ideas stacking up in your notes app actually make it to market.</p>
+      <div class="hero-cta">
+        <a class="btn blue" href="#start">Bring us the backlog <span class="arr">→</span></a>
+        <a class="btn ghost" href="#why-now">See what waiting costs</a>
+      </div>
+      <p class="hero-note">Long-term partnerships, not one-off projects. 30-minute intro, no pitch deck.</p>
+    </div>
+
+    <aside class="backlog rise" aria-label="Example backlog">
+      <header><span class="label">Your backlog, honestly</span><span class="label" id="clock">Q3 · Wk 38</span></header>
+      <ol>
+        <li><span class="idea">Subscription tier for our best customers</span><span class="since">On the list since last spring</span><span class="temp t-violet">cooling</span></li>
+        <li><span class="idea">AI-assisted onboarding that cuts churn</span><span class="since">Competitor announced a beta Tuesday</span><span class="temp t-hot">act now</span></li>
+        <li><span class="idea">Spin the founder's audience into a product line</span><span class="since">Three meetings, zero owners</span><span class="temp t-straw">stalling</span></li>
+        <li><span class="idea">Rebuild the offer + funnel before Q4 spend</span><span class="since">Agency quoted 14 weeks</span><span class="temp t-cold">gone cold</span></li>
+      </ol>
+      <footer>Sound familiar? This is the list we exist to empty.</footer>
+    </aside>
+  </div>
+
+  <div class="stats rise" role="list">
+    <div class="stat" role="listitem"><b data-count="15">15</b><span>years building, launching and scaling</span></div>
+    <div class="stat" role="listitem"><b><span data-count="30">30</span>+</b><span>verticals, from DTC to institutional finance</span></div>
+    <div class="stat" role="listitem"><b data-count="4">4</b><span>partners. Every one of us works on your account</span></div>
+    <div class="stat" role="listitem"><b>$<span data-count="300">300</span>M+</b><span>in growth driven by work our partners led</span></div>
+  </div>
+</header>
+
+<!-- ================= WHY NOW ================= -->
+<section class="block" id="why-now">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">Why now</span>
+      <div>
+        <h2>Ideas don't die. They cool off.</h2>
+        <p class="lede">Every idea starts hot: urgency, conviction, a window nobody else has spotted. Then the quarter happens. Drag the slider and watch what a few "we'll get to it" months do to that heat.</p>
+      </div>
+    </div>
+
+    <div class="cool-tool rise">
+      <div class="cool-left">
+        <div class="ingot" id="ingot" aria-hidden="true"></div>
+        <div class="ingot-meta">
+          <b id="tempF">2,100°F</b>
+          <span class="state" id="tempState">Forging heat. Shape it now.</span>
+        </div>
+        <div class="range-row">
+          <label for="months">Months the idea sits on the list <output id="monthsOut" for="months">0 months</output></label>
+          <input type="range" id="months" min="0" max="18" step="1" value="0">
+          <div class="ticks" aria-hidden="true"><span>Today</span><span>6 mo</span><span>12 mo</span><span>18 mo</span></div>
+        </div>
+        <p class="fine">The ingot follows the glow colors a blacksmith reads as steel cools, from yellow-orange forging heat down to cold grey. Everything else here is an illustrative model built from what we've watched happen, not a forecast for your market.</p>
+      </div>
+      <div class="cool-right" aria-live="polite">
+        <div class="meter"><div class="meter-top"><span>Someone else ships a version first</span><span id="m1v">8%</span></div><div class="meter-bar"><i id="m1" style="background:var(--heat)"></i></div></div>
+        <div class="meter"><div class="meter-top"><span>Category noise you'll have to outspend</span><span id="m2v">10%</span></div><div class="meter-bar"><i id="m2" style="background:var(--bronze)"></i></div></div>
+        <div class="meter"><div class="meter-top"><span>Internal momentum left behind it</span><span id="m3v">100%</span></div><div class="meter-bar"><i id="m3" style="background:var(--accent)"></i></div></div>
+        <p class="verdict" id="verdict">Right now you own the timing. The idea is sharp, the team still cares, and nobody's copied it yet. This is the cheapest it will ever be to build.</p>
+      </div>
+    </div>
+
+    <div class="threats">
+      <div class="threat rise">
+        <h3>It gets knocked off.</h3>
+        <p>Good ideas are rarely only yours. Somewhere, a team with fewer meetings and more hands is building the same thing. The first credible version usually owns the category, and the second one has to fight for it.</p>
+      </div>
+      <div class="threat rise">
+        <h3>The market crowds in.</h3>
+        <p>Month one, you'd have been the obvious answer. Month nine, you're one of twelve, the ads cost triple, and your "new" idea needs a differentiation story it never used to need.</p>
+      </div>
+      <div class="threat rise">
+        <h3>Your own team talks it out.</h3>
+        <p>The quietest killer. The champion changes roles, the budget gets reallocated, and the idea turns into "that thing we almost did." Momentum is a resource, and it runs out faster than cash.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHO ================= -->
+<section class="block" id="who">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">Who it's for</span>
+      <div>
+        <h2>Built for the person who has the ideas <em style="font-style:normal;color:var(--accent)">and</em> the inbox.</h2>
+        <p class="lede">You're not looking for a vendor to manage. You want people who get it, pick up the ball and run. Pick your seat.</p>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Choose your role" id="roleTabs"></div>
+    <div class="role-panel rise" role="tabpanel" id="rolePanel" aria-live="polite">
+      <div>
+        <p class="role-quote" id="roleQuote"></p>
+        <p class="role-body" id="roleBody"></p>
+      </div>
+      <div class="plate">
+        <h4>What we take off your plate</h4>
+        <ul class="checks" id="roleList"></ul>
+        <p class="result" id="roleResult"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUILD ================= -->
+<section class="block" id="build">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">What we build</span>
+      <div>
+        <h2>One team from napkin sketch to compounding revenue.</h2>
+        <p class="lede">Most ideas die in the handoffs: strategist to designer, designer to developer, developer to marketer. We skip the relay race. The people who shape the offer are the same people who build it and take it to market.</p>
+      </div>
+    </div>
+
+    <div class="lanes rise">
+      <article class="lane">
+        <span class="label">Shape</span>
+        <h3>Flesh it out</h3>
+        <p>We pressure-test the idea before anyone writes a line of code, so you only build what the market will pay for.</p>
+        <ul><li>Offer &amp; positioning</li><li>Pricing and unit economics</li><li>Market-proof sprints</li><li>Kill / keep calls, made honestly</li></ul>
+      </article>
+      <article class="lane">
+        <span class="label">Build</span>
+        <h3>Make it real</h3>
+        <p>Product, site, funnel, tooling. Built by senior hands, designed to ship fast and hold up under real traffic.</p>
+        <ul><li>Web apps &amp; MVPs</li><li>Commerce &amp; membership builds</li><li>AI-enabled workflows</li><li>Internal operator tools</li></ul>
+      </article>
+      <article class="lane">
+        <span class="label">Launch</span>
+        <h3>Take it to market</h3>
+        <p>Direct-response strategy and copy that turns attention into action, plus the launch plan to get it in front of people.</p>
+        <ul><li>Funnels, landing pages, email</li><li>Paid social creative</li><li>Webinar &amp; crowdfunding launches</li><li>Analytics you'll actually read</li></ul>
+      </article>
+      <article class="lane">
+        <span class="label">Compound</span>
+        <h3>Keep it growing</h3>
+        <p>Launch day is the start, not the finish line. We stay on, read the signal and scale what works, then pull the next idea off your list.</p>
+        <ul><li>Conversion optimization</li><li>Offer &amp; creative iteration</li><li>Roadmap ownership</li><li>The next venture, already warm</li></ul>
+      </article>
+    </div>
+
+    <div class="triage">
+      <div class="rise">
+        <span class="label">Backlog triage</span>
+        <h3 style="margin-top:12px">What's actually stuck?</h3>
+        <p class="muted" style="font-size:16.5px">Pick the one closest to your week. You'll see where we'd start and what the first 30 days would look like.</p>
+        <div class="chips" id="stuckChips" role="group" aria-label="What's stuck"></div>
+      </div>
+      <div class="plan rise" aria-live="polite">
+        <header><b id="planTitle"></b><span class="label" id="planLane"></span></header>
+        <div class="weeks">
+          <div class="wk"><span class="label">Week 1</span><p id="w1"></p></div>
+          <div class="wk"><span class="label">Weeks 2–3</span><p id="w2"></p></div>
+          <div class="wk"><span class="label">Week 4</span><p id="w3"></p></div>
+        </div>
+        <footer id="planOut"></footer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPARE ================= -->
+<section class="block" id="compare">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">The alternatives</span>
+      <div>
+        <h2>You've got options. Here's the honest math.</h2>
+        <p class="lede">We're not the only way to get an idea built. We're just the way that doesn't make you choose between speed, seniority and someone who's still around next year.</p>
+      </div>
+    </div>
+
+    <div class="seg" role="tablist" aria-label="Compare ATXFORGE with" id="cmpTabs">
+      <button role="tab" aria-selected="true" data-k="hire">vs. Hiring a team</button>
+      <button role="tab" aria-selected="false" data-k="agency">vs. A traditional agency</button>
+      <button role="tab" aria-selected="false" data-k="free">vs. Freelancers</button>
+      <button role="tab" aria-selected="false" data-k="wait">vs. Waiting</button>
+    </div>
+
+    <div class="compare rise">
+      <div class="col">
+        <span class="label" id="cmpLabel">The alternative</span>
+        <h3 id="cmpName">Hiring a team</h3>
+        <dl class="rows" id="cmpThem"></dl>
+        <div class="timeline"><span class="label">Time to first launch</span><div class="tl-bar"><i id="cmpThemBar"></i></div><p class="fine" id="cmpThemTime" style="margin-top:6px"></p></div>
+      </div>
+      <div class="col us">
+        <span class="label" style="color:var(--accent)">Partnering with us</span>
+        <h3>ATXFORGE</h3>
+        <dl class="rows" id="cmpUs"></dl>
+        <div class="timeline"><span class="label">Time to first launch</span><div class="tl-bar"><i style="width:22%"></i></div><p class="fine" style="margin-top:6px">Typically 4–8 weeks from kickoff, depending on scope</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="block" id="process">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">How it works</span>
+      <div>
+        <h2>Five moves. No mystery.</h2>
+        <p class="lede">Every partnership runs the same way, because the process is how we keep speed from turning into chaos. Tap a step.</p>
+      </div>
+    </div>
+    <div class="steps-scroll">
+      <div class="steps" role="tablist" aria-label="Process steps" id="steps"></div>
+    </div>
+    <div class="step-detail rise" id="stepDetail" role="tabpanel" aria-live="polite">
+      <div><span class="label" id="sdWhen"></span><h3 id="sdTitle" style="margin-top:10px"></h3><p id="sdBody"></p></div>
+      <div class="plate" style="background:var(--ground-2)"><h4>You walk away with</h4><ul class="checks" id="sdList"></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VERTICALS ================= -->
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">Where we've worked</span>
+      <div>
+        <h2>30+ industries. Pattern recognition you can't hire.</h2>
+        <p class="lede">A subscription playbook from wellness solves a retention problem in SaaS. A fintech compliance habit saves a marketplace launch. After 15 years across this many rooms, most of your "new" problems are ones we've already solved somewhere else.</p>
+      </div>
+    </div>
+    <div class="v-filter" role="group" aria-label="Filter industries" id="vFilter"></div>
+    <div class="v-cloud rise" id="vCloud"></div>
+    <div class="v-foot">
+      <p>Case studies are being written up with client permission. Want specifics in your category before we get on a call? Ask. We'll walk you through the relevant work directly.</p>
+      <a class="btn ghost" href="#start">Ask about your industry <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="block" id="team">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">The collective</span>
+      <div>
+        <h2>Four partners. No juniors hiding behind the pitch.</h2>
+        <p class="lede">Agencies sell you the partners and staff you with interns. We're the whole team, on purpose. Whoever you meet on the first call is who builds your thing.</p>
+      </div>
+    </div>
+    <div class="team">
+      <article class="member rise">
+        <div class="portrait"><span>PH</span></div>
+        <div><span class="lane-tag">Growth &amp; launch</span><h3 style="margin-top:4px">Peter Hewlett</h3></div>
+        <p>Operator-builder who lives where offers, creative and conversion meet. Turns loose concepts into launches with real numbers behind them.</p>
+      </article>
+      <article class="member rise">
+        <div class="portrait"><span>WS</span></div>
+        <div><span class="lane-tag">Strategy &amp; build</span><h3 style="margin-top:4px">Wilson Smith</h3></div>
+        <p>Builder and strategist who keeps things clear under pressure. Sets scope, sequences the work and makes sure the right thing ships first.</p>
+      </article>
+      <article class="member rise">
+        <div class="portrait"><span>IB</span></div>
+        <div><span class="lane-tag">Monetization &amp; copy</span><h3 style="margin-top:4px">Itay Bengal</h3></div>
+        <p>Monetization specialist with 13+ years of direct-response copy across fintech, SaaS, investing and high-ticket offers. Finds the revenue and writes what makes it convert.</p>
+      </article>
+      <article class="member rise">
+        <div class="portrait"><span>MB</span></div>
+        <div><span class="lane-tag">Engineering &amp; systems</span><h3 style="margin-top:4px">Matthew Bergvinson</h3></div>
+        <p>Brings institutional-grade engineering discipline to every build, so what we launch is fast, secure and still standing at scale.</p>
+      </article>
+    </div>
+    <div class="disciplines rise">
+      <div class="disc"><b>$71M+</b><span>capital raised through crowdfunding and investor campaigns our partners wrote</span></div>
+      <div class="disc"><b>$20M+</b><span>in webinar-driven sales from partner-led launches</span></div>
+      <div class="disc"><b>&lt;100μs</b><span>execution systems engineered for trading desks. Your MVP is in good hands.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MODELS ================= -->
+<section class="block" id="models">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">Ways to partner</span>
+      <div>
+        <h2>Start small, stay long, or build it together.</h2>
+        <p class="lede">Every engagement is scoped to the outcome, not billed by the hour. Most partners start with a sprint and stay because the second idea is always easier than the first.</p>
+      </div>
+    </div>
+    <div class="models">
+      <article class="model rise">
+        <span class="label">Prove it</span>
+        <h3>Launch Sprint</h3>
+        <p>One idea, one clear outcome, a fixed window. The fastest way to find out whether it's real and whether we work well together.</p>
+        <ul><li>4–8 week fixed scope</li><li>Offer, build and launch in one push</li><li>Go / grow / kill recommendation at the end</li></ul>
+        <p class="best"><strong>Best for:</strong> a single high-conviction idea with a deadline.</p>
+      </article>
+      <article class="model feat rise">
+        <span class="label">Most partners land here</span>
+        <h3>Embedded Partner</h3>
+        <p>We become the build-and-launch arm of your company. A standing monthly partnership that works your backlog in order of what makes money.</p>
+        <ul><li>Monthly retainer, quarterly roadmap</li><li>All four partners, one shared channel</li><li>Ideas shipped back-to-back, context never lost</li></ul>
+        <p class="best"><strong>Best for:</strong> CMOs, COOs and CEOs with a list, not a single project.</p>
+      </article>
+      <article class="model rise">
+        <span class="label">Build it together</span>
+        <h3>Venture Partner</h3>
+        <p>For the right founder and the right idea, we put skin in the game: reduced fees plus equity or revenue share, and we build it like it's ours.</p>
+        <ul><li>Fee + equity or rev-share hybrid</li><li>We take on product, growth and GTM</li><li>Selective. A few a year.</li></ul>
+        <p class="best"><strong>Best for:</strong> founders and creators with distribution, an audience or domain edge.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FIT CHECK ================= -->
+<section class="block" id="fit">
+  <div class="wrap">
+    <div class="sec-head rise">
+      <span class="label">Fit check</span>
+      <div>
+        <h2>Are we a match? Thirty seconds, five questions.</h2>
+        <p class="lede">We turn down more work than we take, because the partnerships that last start with a real fit. Be honest. Nobody sees these but you.</p>
+      </div>
+    </div>
+    <div class="fit">
+      <div class="qs" id="qs"></div>
+      <aside class="score" aria-live="polite">
+        <span class="label">Your fit</span>
+        <div class="gauge" id="gauge" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <h3 id="fitTitle">Answer to see your fit</h3>
+        <p id="fitBody">Each answer fills in a bar. There aren't any trick questions.</p>
+        <a class="btn blue" href="#start" id="fitCta">Start a partnership <span class="arr">→</span></a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="block" id="faq">
+  <div class="wrap faq-grid">
+    <div class="rise"><span class="label">Straight answers</span><h2 style="font-size:clamp(36px,5vw,64px);margin-top:14px">Before we talk.</h2></div>
+    <div class="faq rise">
+      <details open><summary>Are you an agency, a consultancy or a venture studio?</summary><div class="a">Somewhere in between, on purpose. Like an agency, we do the actual work: build, copy, creative, launch. Like a studio, we think in ventures and we're comfortable taking equity when it makes sense. Unlike either, we're four senior partners with no bench of juniors, and we're built for long relationships instead of one-off projects.</div></details>
+      <details><summary>We're not a startup. Is this still for us?</summary><div class="a">Absolutely. A lot of our best partners are established companies with a marketing leader or operator who has more good ideas than internal capacity. New product lines, new offers, new channels, internal tools: "new venture" doesn't have to mean "new company."</div></details>
+      <details><summary>How fast can we actually launch something?</summary><div class="a">Most first launches go live in 4–8 weeks from kickoff. Some things, like a rebuilt offer and landing page, move in two. A full product takes longer, but you'll see working pieces every week, not a big reveal at the end.</div></details>
+      <details><summary>Do you take equity?</summary><div class="a">Sometimes. Our Venture Partner model mixes a reduced fee with equity or revenue share when the founder, the idea and the distribution make sense. Most partnerships are fee-based. We'll tell you straight which one fits.</div></details>
+      <details><summary>Can you work alongside our existing team and vendors?</summary><div class="a">Yes. We're happy to be the tip of the spear while your team keeps the core business running, or to slot in next to an existing agency and own a specific lane. Our job is to add speed, not start turf wars.</div></details>
+      <details><summary>Can we just hire you for strategy?</summary><div class="a">We'll do a focused strategy engagement if it's the right first step, but that's not where we shine. Our edge is that the people who make the plan also execute it. Strategy without a build team is how ideas end up back on the list.</div></details>
+      <details><summary>You're in Austin. Do we need to be?</summary><div class="a">No. We're rooted in Austin and work with partners everywhere. If you're local, we'll happily grab a coffee and a whiteboard.</div></details>
+      <details><summary>What happens on the first call?</summary><div class="a">Thirty minutes. You walk us through the backlog, we pressure-test the idea most worth moving on, and you leave with a clear next step whether or not we work together. No slides, no pitch theater.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final" id="start">
+  <div class="wrap final-grid">
+    <div>
+      <span class="label">Start a partnership</span>
+      <h2>Strike while it's still hot.</h2>
+      <p class="lede">Every week an idea sits on the list, it gets more expensive to build and easier to copy. Tell us what's stuck. We'll reply within one business day with a time to talk and a first take on where we'd start.</p>
+      <ul>
+        <li>30-minute call with the partners who'd do the work</li>
+        <li>An honest read on the idea, even if the answer is "don't"</li>
+        <li>A concrete first move you can use either way</li>
+      </ul>
+    </div>
+    <form class="brief" id="brief" novalidate>
+      <div class="f2">
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="f2">
+        <div class="field"><label for="f-role">Your seat</label>
+          <select id="f-role" name="role"><option>Founder / CEO</option><option>CMO</option><option>Marketing Manager</option><option>COO / Operator</option><option>Creator</option><option>Other</option></select></div>
+        <div class="field"><label for="f-co">Company or project</label><input id="f-co" name="company" autocomplete="organization"></div>
+      </div>
+      <div class="field"><label for="f-stuck">What's stuck? The more honest, the better.</label><textarea id="f-stuck" name="stuck" placeholder="e.g. We've wanted to launch a membership tier for a year. We have the audience, no one to build it."></textarea></div>
+      <div class="field"><label for="f-model">Leaning toward</label>
+        <select id="f-model" name="model"><option>Not sure yet</option><option>Launch Sprint</option><option>Embedded Partner</option><option>Venture Partner</option></select></div>
+      <button class="btn blue" type="submit">Send it to the partners <span class="arr">→</span></button>
+      <p class="form-note" id="formNote">Opens your email app with this filled in, sent to hello@atxforge.com</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 ATXFORGE · Austin, TX · Built as partners, not vendors.</span>
+    <nav aria-label="Footer"><a href="#build">What we build</a><a href="#models">Ways to partner</a><a href="#team">Team</a><a href="mailto:hello@atxforge.com">hello@atxforge.com</a></nav>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+const $ = (s, r = document) => r.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- scroll heat bar + reveal ---- */
+const heat = $('#heat');
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  heat.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, { passive: true });
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.rise').forEach(el => io.observe(el));
+} else document.querySelectorAll('.rise').forEach(el => el.classList.add('in'));
+
+/* ---- count-up stats ---- */
+if (!reduce) document.querySelectorAll('[data-count]').forEach(el => {
+  const end = +el.dataset.count, t0 = performance.now(), d = 1400;
+  const tick = t => { const p = Math.min(1, (t - t0) / d); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+});
+
+/* ---- cooling tool ---- */
+const stops = [ // month, glow colors, state
+  [0, ['#FFF6D6', '#FFC04A', '#E8621E'], 'Forging heat. Shape it now.'],
+  [2, ['#FFC260', '#EE6A1E', '#A8300F'], 'Bright orange. Still easy to bend.'],
+  [4, ['#F0592A', '#B42A14', '#5E1710'], 'Cherry red. Workable, not for long.'],
+  [7, ['#9C2A18', '#561812', '#2A1413'], 'Dull red. Every strike costs more.'],
+  [10, ['#4A2A26', '#2B211F', '#1C1A1A'], 'Black heat. Set in its ways.'],
+  [14, ['#5B6168', '#3A3F45', '#24282C'], 'Grey. Someone else is swinging.'],
+  [17, ['#7E8993', '#56606A', '#353C43'], 'Cold steel. Brittle and crowded.']
+];
+const verdicts = [
+  [0, "Right now you own the timing. The idea is sharp, the team still cares, and nobody's copied it yet. This is the cheapest it will ever be to build."],
+  [3, "A quarter in. Probably fine, but the champion is juggling three other priorities and the first lookalike posts are showing up in your feed."],
+  [6, "Half a year. Someone adjacent has launched a scrappy version. It isn't great, but it's live, and live beats perfect in a buyer's mind."],
+  [9, "The window is visibly closing. You'll need a sharper angle and a bigger budget to earn attention you could've had for free."],
+  [12, "A year later it's a crowded category. The internal story has shifted from “we should” to “we could have.”"],
+  [15, "At this point the idea is usually reassigned, rescoped or quietly dropped. Revivable, but it's a rescue now, not a launch."],
+  [18, "Cold steel. Not impossible to reheat, but you're paying full price to join a market you could have led."]
+];
+const months = $('#months');
+function cool() {
+  const m = +months.value;
+  $('#monthsOut').textContent = m === 0 ? 'Today' : m + (m === 1 ? ' month' : ' months');
+  let i = 0; while (i < stops.length - 1 && stops[i + 1][0] <= m) i++;
+  const s = stops[i];
+  const temp = Math.round((70 + 2030 * Math.exp(-m / 4.6)) / 10) * 10;
+  $('#tempF').textContent = temp.toLocaleString() + '°F';
+  $('#tempState').textContent = s[2];
+  $('#ingot').style.background = `radial-gradient(120% 140% at 50% 110%, ${s[1][0]}, ${s[1][1]} 45%, ${s[1][2]})`;
+  const r1 = Math.round(8 + 84 * (1 - Math.exp(-m / 7)));
+  const r2 = Math.round(10 + 85 * (m / 18) ** 1.2);
+  const r3 = Math.round(100 * Math.exp(-m / 9.5));
+  [['m1', r1], ['m2', r2], ['m3', r3]].forEach(([id, v]) => { $('#' + id).style.width = v + '%'; $('#' + id + 'v').textContent = v + '%'; });
+  let v = 0; while (v < verdicts.length - 1 && verdicts[v + 1][0] <= m) v++;
+  $('#verdict').textContent = verdicts[v][1];
+}
+months.addEventListener('input', cool); cool();
+
+/* ---- roles ---- */
+const roles = {
+  'Marketing Manager': {
+    q: "I've got a great campaign idea every week and a dev queue that's booked till next quarter.",
+    b: "You're the one closest to the customer, which means you see the opportunities first, and you also get told “not this sprint” first. We give you a build-and-launch team that doesn't sit in someone else's backlog.",
+    l: ["Landing pages, funnels and microsites shipped in days, not quarters", "Direct-response copy and creative that makes your numbers look good upstairs", "Tracking and reporting set up so wins are provable", "A team that works with your brand guidelines, not around them"],
+    r: "Usually starts with: a <b>Launch Sprint</b> on the campaign you've been sitting on."
+  },
+  'CMO': {
+    q: "The strategy is clear. What I don't have is the execution bandwidth to test half of it.",
+    b: "You don't need another deck. You need a senior crew that can take a strategic bet and turn it into a live test with real data behind it, without adding headcount or pulling your team off the core business.",
+    l: ["New offers, channels and brand extensions built and launched end to end", "Senior strategy and hands-on execution in the same room", "Market-proof sprints before you commit a real budget", "A standing partner that works the roadmap quarter after quarter"],
+    r: "Usually starts with: an <b>Embedded Partner</b> retainer against your top three bets."
+  },
+  'COO': {
+    q: "We keep duct-taping processes that should be a real system by now.",
+    b: "Operators see the leverage hiding in the workflow: the tool that would save forty hours a week, the portal customers keep asking for. We build the internal and customer-facing systems that let the business scale without scaling the chaos.",
+    l: ["Internal tools, dashboards and automations your team will actually use", "AI-enabled workflows that remove repetitive work", "Customer portals and self-serve experiences", "Engineering built to institutional standards, sized for your stage"],
+    r: "Usually starts with: a <b>Launch Sprint</b> on the process that hurts most."
+  },
+  'CEO / Founder': {
+    q: "I have more ideas than I have people I trust to build them.",
+    b: "You don't want to spend six months recruiting a team for a concept that might not work. You want a co-builder who thinks like an owner, tells you when an idea's weak and moves fast when it's strong.",
+    l: ["Idea to validated offer to launched product, one team the whole way", "Honest go / no-go calls before you burn cash", "Go-to-market strategy, copy and funnels that convert", "Option to partner on fee + equity when the fit is right"],
+    r: "Usually starts with: a <b>Launch Sprint</b>, often growing into a <b>Venture Partner</b> deal."
+  },
+  'Creator': {
+    q: "The audience is there. I just don't want to become a software company to monetize it.",
+    b: "You've already done the hardest part: people trust you. We handle the product, the offer, the funnel and the backend, so you can keep doing the thing that built the audience in the first place.",
+    l: ["Offer design: courses, memberships, communities, physical products", "Stores, apps and checkout flows built for your audience", "Launch sequences, webinars and email that sell without feeling salesy", "Revenue-share structures so we win when you win"],
+    r: "Usually starts with: a <b>Venture Partner</b> conversation."
+  }
+};
+const roleTabs = $('#roleTabs');
+Object.keys(roles).forEach((k, i) => {
+  const b = document.createElement('button');
+  b.className = 'tab'; b.role = 'tab'; b.id = 'role-' + i; b.textContent = k;
+  b.setAttribute('aria-selected', i === 3); b.setAttribute('aria-controls', 'rolePanel');
+  b.onclick = () => setRole(k);
+  roleTabs.append(b);
+});
+function setRole(k) {
+  const r = roles[k];
+  roleTabs.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t.textContent === k));
+  $('#roleQuote').textContent = r.q; $('#roleBody').textContent = r.b;
+  $('#roleList').innerHTML = r.l.map(x => `<li>${x}</li>`).join('');
+  $('#roleResult').innerHTML = r.r;
+}
+setRole('CEO / Founder');
+
+/* ---- triage ---- */
+const stuck = {
+  "We have the idea, not the offer": { lane: "Shape → Launch", t: "Turn the idea into something people buy", w: ["Customer and competitor teardown. Map where the money actually is.", "Offer, pricing and positioning drafted. A landing page puts it in front of real buyers.", "Read the signal: pre-sales, waitlist, reply rates. Decide go, grow or kill."], o: "Outcome: a validated offer with proof, not opinions." },
+  "Dev is booked for months": { lane: "Build", t: "Get it built without touching your queue", w: ["Scope to the smallest version that proves value. Architecture and stack agreed.", "Weekly working builds. You click through real software, not mockups.", "Hardened, tested and live, handed over clean or run by us."], o: "Outcome: shipped product, zero hours from your internal dev team." },
+  "Traffic, but it doesn't convert": { lane: "Launch", t: "Fix the leak before buying more traffic", w: ["Funnel and message audit. Find exactly where buyers drop off and why.", "Rewrite the offer, pages and emails. Rebuild the weakest step first.", "Launch the test, measure lift, line up the next round."], o: "Outcome: more revenue from the traffic you're already paying for." },
+  "Nobody owns the launch": { lane: "Launch → Compound", t: "Put one team on the hook for go-live", w: ["Launch plan: audience, channels, message, dates. One owner (us).", "Creative, copy, email and ads produced. Tracking wired end to end.", "Go live, watch the numbers daily, adjust in real time."], o: "Outcome: a launch that happens on the date, with a team behind it." },
+  "Too many ideas, no priority": { lane: "Shape", t: "Turn the list into a roadmap", w: ["Backlog session: every idea scored on upside, effort and timing risk.", "Top two ideas pressure-tested with quick market-proof work.", "A 90-day forge plan: what ships, in what order, and what gets killed."], o: "Outcome: clarity on the one thing to build next, and the confidence to drop the rest." },
+  "We need an internal tool": { lane: "Build", t: "Replace the duct tape with a real system", w: ["Shadow the workflow. Measure hours lost and where errors creep in.", "Build the tool with your team clicking through it every week.", "Roll out, train, automate the next step."], o: "Outcome: hours back every week and a process that scales." }
+};
+const chips = $('#stuckChips');
+Object.keys(stuck).forEach((k, i) => {
+  const b = document.createElement('button');
+  b.className = 'chip'; b.type = 'button'; b.id = 'stuck-' + i; b.textContent = k;
+  b.setAttribute('aria-pressed', i === 0);
+  b.onclick = () => setStuck(k);
+  chips.append(b);
+});
+function setStuck(k) {
+  const s = stuck[k];
+  chips.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c.textContent === k));
+  $('#planTitle').textContent = s.t; $('#planLane').textContent = 'Lane: ' + s.lane;
+  $('#w1').textContent = s.w[0]; $('#w2').textContent = s.w[1]; $('#w3').textContent = s.w[2];
+  $('#planOut').textContent = s.o;
+}
+setStuck(Object.keys(stuck)[0]);
+
+/* ---- compare ---- */
+const usRows = [["Senior people on it", "All four partners, every time"], ["Fixed overhead", "None. Scales with the work"], ["Context when the project ends", "Kept. We stay for the next one"], ["Who owns the outcome", "We do, alongside you"], ["If the idea is weak", "We say so, before you spend"]];
+const cmp = {
+  hire: { n: "Hiring a team", bar: 100, time: "Often 6–9 months: recruit, onboard, then build", rows: [["Senior people on it", "Whoever you can recruit and afford"], ["Fixed overhead", "Salaries, benefits, equity, tools"], ["Context when the project ends", "Kept, if they stay"], ["Who owns the outcome", "You, plus the new hires you manage"], ["If the idea is weak", "You find out after the payroll commitment"]] },
+  agency: { n: "A traditional agency", bar: 62, time: "Often 3–4 months once discovery and approvals land", rows: [["Senior people on it", "In the pitch. Juniors in the work"], ["Fixed overhead", "Retainers plus change orders"], ["Context when the project ends", "Lost at handoff"], ["Who owns the outcome", "The deliverable, not the result"], ["If the idea is weak", "They'll build it anyway"]] },
+  free: { n: "Freelancers", bar: 55, time: "Varies. Coordination is the hidden timeline", rows: [["Senior people on it", "Some, stitched together by you"], ["Fixed overhead", "Low cost, high management load"], ["Context when the project ends", "Scattered across five inboxes"], ["Who owns the outcome", "You, as project manager"], ["If the idea is weak", "Not their job to say"]] },
+  wait: { n: "Waiting", bar: 100, time: "Never, or after someone else launches it", rows: [["Senior people on it", "No one"], ["Fixed overhead", "Zero dollars, all of the opportunity"], ["Context when the project ends", "The idea quietly expires"], ["Who owns the outcome", "Your competitor"], ["If the idea is weak", "You'll never know. Or it was great, and you'll know"]] }
+};
+const dl = (rows) => rows.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join('');
+$('#cmpUs').innerHTML = dl(usRows);
+function setCmp(k) {
+  const c = cmp[k];
+  document.querySelectorAll('#cmpTabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.k === k));
+  $('#cmpName').textContent = c.n; $('#cmpThem').innerHTML = dl(c.rows);
+  $('#cmpThemBar').style.width = c.bar + '%'; $('#cmpThemTime').textContent = c.time;
+}
+document.querySelectorAll('#cmpTabs button').forEach(b => b.onclick = () => setCmp(b.dataset.k));
+setCmp('hire');
+
+/* ---- process ---- */
+const steps = [
+  { n: "Signal", when: "Day 0 · 30 minutes", t: "You tell us what's stuck.", b: "A short call with the partners. You walk us through the backlog, the goals and the constraints. We ask the uncomfortable questions and tell you honestly whether we're the right team.", l: ["A straight read on the idea", "A suggested first move", "Zero obligation"] },
+  { n: "Shape", when: "Weeks 1–2", t: "We decide what's worth building.", b: "We pressure-test the offer, the market and the economics, then lock scope around the smallest thing that proves the idea. This is where we kill bad ideas cheaply, before they cost real money.", l: ["Offer and positioning", "Scoped build plan and timeline", "Clear success metrics"] },
+  { n: "Forge", when: "Weeks 2–8", t: "We build it in the open.", b: "Product, pages, copy and creative come together in parallel, not in a relay. You see working progress every week in a shared channel with all four partners.", l: ["Weekly working demos", "One channel, no account managers", "Launch-ready assets"] },
+  { n: "Launch", when: "Go-live", t: "We put it in front of buyers.", b: "Funnels live, campaigns running, tracking wired. We watch the numbers daily through launch and adjust copy, offer and spend in real time.", l: ["Live product and funnel", "Launch campaign", "A dashboard you'll actually open"] },
+  { n: "Compound", when: "Ongoing", t: "We scale what works, then do it again.", b: "Optimize the winner, cut what isn't working and pull the next idea off your list. This is where partnerships pay off: every launch after the first is faster, because we already know your business.", l: ["Conversion and offer iteration", "Quarterly roadmap", "The next idea, already warm"] }
+];
+const stepsEl = $('#steps');
+steps.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'step'; b.role = 'tab'; b.id = 'step-' + i;
+  b.innerHTML = `<span class="label">Step ${i + 1}</span><b>${s.n}</b>`;
+  b.onclick = () => setStep(i);
+  stepsEl.append(b);
+});
+function setStep(i) {
+  const s = steps[i];
+  stepsEl.querySelectorAll('.step').forEach((b, j) => b.setAttribute('aria-selected', j === i));
+  $('#sdWhen').textContent = s.when; $('#sdTitle').textContent = s.t; $('#sdBody').textContent = s.b;
+  $('#sdList').innerHTML = s.l.map(x => `<li>${x}</li>`).join('');
+}
+setStep(0);
+
+/* ---- verticals ---- */
+const V = {
+  "Commerce": ["DTC & CPG", "Health supplements", "Beauty", "Food & beverage", "Retail", "Subscriptions", "Marketplaces"],
+  "Software & AI": ["SaaS", "AI-enabled products", "Internal tools", "Mobile apps", "Developer platforms"],
+  "Finance": ["Fintech", "Trading & quant", "Private equity", "Investing education", "Crowdfunding", "Financial services"],
+  "Media & creators": ["Creator brands", "Media & content", "Education & courses", "Communities & memberships", "Events", "Webinars"],
+  "Services & local": ["B2B services", "Professional services", "Real estate", "Hospitality", "Home & local services", "Nonprofit", "Sports & outdoor", "Health & wellness"]
+};
+const vf = $('#vFilter'), vc = $('#vCloud');
+const all = Object.entries(V).flatMap(([g, xs]) => xs.map(x => [g, x]));
+all.forEach(([g, x]) => { const s = document.createElement('span'); s.className = 'v'; s.dataset.g = g; s.textContent = x; vc.append(s); });
+['All', ...Object.keys(V)].forEach((g, i) => {
+  const b = document.createElement('button');
+  b.className = 'tab'; b.type = 'button'; b.id = 'vf-' + i;
+  b.textContent = g + (g === 'All' ? ` · ${all.length}` : ` · ${V[g].length}`);
+  b.setAttribute('aria-pressed', i === 0); b.setAttribute('aria-selected', i === 0);
+  b.onclick = () => {
+    vf.querySelectorAll('button').forEach(x => { x.setAttribute('aria-pressed', x === b); x.setAttribute('aria-selected', x === b); });
+    vc.querySelectorAll('.v').forEach(s => { const on = g === 'All' || s.dataset.g === g; s.classList.toggle('dim', !on); s.classList.toggle('on', on && g !== 'All'); });
+  };
+  vf.append(b);
+});
+
+/* ---- fit check ---- */
+const qsData = [
+  "You have more ideas worth building than people to build them.",
+  "At least one of those ideas has a real window. Waiting has a cost.",
+  "You'd rather have a long-term partner than manage a one-off vendor.",
+  "You can make decisions quickly, or you can get to the person who does.",
+  "You want someone who'll tell you when an idea isn't worth it."
+];
+const answers = Array(qsData.length).fill(null);
+const qsEl = $('#qs');
+qsData.forEach((q, i) => {
+  const row = document.createElement('div');
+  row.className = 'q';
+  row.innerHTML = `<p>${q}</p><div class="yn" role="group" aria-label="Answer"><button type="button" id="q${i}y" aria-pressed="false">Yes</button><button type="button" id="q${i}n" aria-pressed="false">Not really</button></div>`;
+  const [y, n] = row.querySelectorAll('button');
+  y.onclick = () => { answers[i] = 1; y.setAttribute('aria-pressed', true); n.setAttribute('aria-pressed', false); fit(); };
+  n.onclick = () => { answers[i] = 0; n.setAttribute('aria-pressed', true); y.setAttribute('aria-pressed', false); fit(); };
+  qsEl.append(row);
+});
+function fit() {
+  const answered = answers.filter(a => a !== null).length, yes = answers.filter(a => a === 1).length;
+  const colors = ['var(--heat)', 'var(--straw)', 'var(--bronze)', 'var(--violet)', 'var(--accent)'];
+  $('#gauge').querySelectorAll('i').forEach((g, i) => g.style.background = i < yes ? colors[Math.min(4, yes - 1)] : 'var(--rule-2)');
+  let t, b;
+  if (answered < qsData.length) { t = `${yes} of ${answered} so far`; b = `${qsData.length - answered} to go. Keep going, it's quick.`; }
+  else if (yes >= 4) { t = "Strong fit. Let's talk."; b = "You're exactly who we built this for: more good ideas than hands, and a window that won't stay open. Tell us what's stuck."; }
+  else if (yes >= 2) { t = "Likely a fit"; b = "There's something here. A 30-minute call will tell us both quickly whether a sprint or a longer partnership makes sense."; }
+  else { t = "Maybe not yet"; b = "Honest answer: we might not be the right partner right now. Bookmark us for when the backlog outgrows the team."; }
+  $('#fitTitle').textContent = t; $('#fitBody').textContent = b;
+}
+
+/* ---- form → mailto ---- */
+$('#brief').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target, name = f.name.value.trim(), email = f.email.value.trim();
+  const note = $('#formNote');
+  if (!name || !/^\S+@\S+\.\S+$/.test(email)) { note.textContent = 'Add your name and a valid email so we can reply.'; note.style.color = 'var(--heat)'; return; }
+  const body = `Name: ${name}\nEmail: ${email}\nSeat: ${f.role.value}\nCompany/project: ${f.company.value}\nLeaning toward: ${f.model.value}\n\nWhat's stuck:\n${f.stuck.value}`;
+  location.href = `mailto:hello@atxforge.com?subject=${encodeURIComponent('Partnership: ' + (f.company.value || name))}&body=${encodeURIComponent(body)}`;
+  note.style.color = ''; note.textContent = 'Your email app should open now. If it doesn’t, write to hello@atxforge.com.';
+});
+</script>
+
+</body>
+</html>
